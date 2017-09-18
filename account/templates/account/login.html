@@ -1,0 +1,24 @@
+<html>
+	<h1>Login:</h1><br><br>
+    
+    {% if error_message %}
+    <br><br>
+    <p><strong>{{error_message}}</strong></p>
+    <br><br>
+    {% endif %}
+    
+    <form action='{% url 'loginver' %}' method="POST">
+        
+        {% csrf_token %}
+        
+        <label>Username:</label><br>
+        <input id="your_name" type="text" name="name" maxlength="100" required />
+        <br>
+        <label>Password:</label><br>
+        <input id="password" type="password" name="password" maxlength="100" required /><br>
+        <input type='submit' name='user' value='Login'><br>
+    
+    </form>
+    
+	<a href='{% url 'createac' %}'>create account</a><br>
+</html>

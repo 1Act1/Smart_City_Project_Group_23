@@ -1,0 +1,10 @@
+<html>
+	<h1>Facility list</h1><br><br>
+    <ol>
+    {% for entity in entity_list %}
+    <li><a href='{% url 'detail' entity.id %}'>{{ entity.name }}</a>
+    {% endfor %}
+    </ol>
+    <br><br><a href='{% url 'home' %}'>back to home</a><br>
+    
+</html>

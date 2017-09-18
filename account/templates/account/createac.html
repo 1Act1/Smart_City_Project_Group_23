@@ -1,0 +1,47 @@
+<html>
+	<h1>Create account:</h1><br><br>
+    
+    {% if error_message %}
+    <br><br>
+    <p><strong>{{error_message}}</strong></p>
+    <br><br>
+    {% endif %}
+    
+    <form action='{% url 'createprocess' %}' method="POST">
+        
+        {% csrf_token %}
+        
+        <label>Username:</label><br>
+        <input id="your_name" type="text" name="name" maxlength="100" required />
+        <br>
+        <label>Password:</label><br>
+        <input id="password" type="password" name="password" maxlength="100" required />
+        <br>
+        <label>Confirm Password:</label><br>
+        <input id="confirm_password" type="password" name="confirm_password" maxlength="100" required />
+        <br>
+        <label>Phone Number (not required):</label><br>
+        <input id="phone_number" type="tel" name="phone_number" maxlength="30" />
+        <br>
+        <label>Email (not required):</label><br>
+        <input id="email" type="text" name="email" maxlength="50" />
+        <br>
+        <label>Residentail Address (not required):</label><br>
+        <input id="address" type="text" name="address" maxlength="100" />
+        <br>
+        
+        <label>Account Type (Choose one):</label><br>
+        <input type='radio' id='1' name='actype' value=1>
+        <label> Student </label><br>
+        <input type='radio' id='2' name='actype' value=2>
+        <label> Tourist </label><br>
+        <input type='radio' id='3' name='actype' value=3>
+        <label> Businessman </label><br>
+        
+        <input type='submit' value='submit'>
+            
+    </form>
+    
+    <a href='{% url 'login' %}'>cancel</a><br>
+    
+</html>

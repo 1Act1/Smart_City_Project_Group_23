@@ -1,0 +1,35 @@
+<html>
+
+<head>
+<title> Admin Home Page </title>
+</head>
+
+<body>
+<center>
+<font size="5">
+<b>
+<i>
+<h1>Welcome back Admin!</h1>
+</i>
+</b>
+</font>
+<img HEIGHT="500" WIDTH="1000" src="smartcity.jpg"></img>
+</center>
+<font size="4">
+<p> </p>
+<p style="text-align:center;">
+<a href="{% url 'adminentitylist' %}">List of Entity</a>
+<span style="float:right;">
+<a href="{% url 'createadmin' %}">Create Admin</a>
+</span>
+<span style="float:left;">
+<a href="{% url 'adminmessenger' %}">Messenger</a>
+</span>
+</p>
+</font>
+</body>
+
+
+
+
+</html>
