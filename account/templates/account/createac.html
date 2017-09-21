@@ -7,8 +7,14 @@
     <br><br>
     {% endif %}
     
-    <form action='{% url 'createprocess' %}' method="POST">
-        
+    
+    {% if admin %}
+    <form action= '{% url 'createadminprocess' %}' method="POST">
+    {% endif %}
+    {% if not admin %}
+    <form action= '{% url 'createprocess' %}' method="POST">
+    {% endif %}
+    
         {% csrf_token %}
         
         <label>Username:</label><br>
@@ -30,6 +36,7 @@
         <input id="address" type="text" name="address" maxlength="100" />
         <br>
         
+        {% if not admin %}
         <label>Account Type (Choose one):</label><br>
         <input type='radio' id='1' name='actype' value=1>
         <label> Student </label><br>
@@ -37,11 +44,12 @@
         <label> Tourist </label><br>
         <input type='radio' id='3' name='actype' value=3>
         <label> Businessman </label><br>
+        {% endif %}
         
         <input type='submit' value='submit'>
             
     </form>
     
-    <a href='{% url 'login' %}'>cancel</a><br>
+    <a href={% if admin %}'{% url 'adminhome' %}'{% endif %}  {% if not admin %}'{% url 'login' %}'{% endif %}>cancel</a><br>
     
 </html>

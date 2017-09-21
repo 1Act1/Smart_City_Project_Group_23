@@ -1,0 +1,44 @@
+<!Doctype html>
+<html>
+<head>
+<title> Account Details </title>
+</head>
+<body>
+
+<h1> Edit your account details</h1>
+
+{% if message %}
+<br><br>
+<font color='red'><strong>{{message}}</strong></font>
+<br><br>
+{% endif %}
+
+<form action='{% url 'editacsave' %}' method="POST" >
+    {% csrf_token %}
+
+<h3> Username: </h3>
+Username:<br>
+<input type="text" name="Username" value="{{ac.username}}"><br><br>
+
+<h3> Details:</h3>
+Physical Address: <br>
+<input type="text" name="address" value="{{ac.residential_address}}"><br><br>
+Contact Number: <br>
+<input type="text" name="contactnumber" value="{{ac.phone_number}}"><br><br>
+Email Address: <br>
+<input type="email" name="emailaddress" value="{{ac.email_address}}"><br><br>
+
+<h3> Password: </h3>
+Old Password:<br>
+<input type="password" name="old_password"><br><br>
+New Password:<br>
+<input type="password" name="new_password"><br><br>
+Confirm New Password: <br>
+<input type="password" name="confirm_password"><br><br>
+<input type="submit" value="Save Changes">
+<input type="reset"><br>
+</form>
+        
+        <br><a href='{% url 'home' %}'>Back to home</a><br>
+</body>
+</html>

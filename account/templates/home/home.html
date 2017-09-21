@@ -1,5 +1,5 @@
 <html>
-	<h1>Home page</h1><br><br>
+    <h1>Wellcome, {{username}}</h1><br><br>
     
     
     <a href='{% url 'list' %}'>Facility list</a><br><br>
@@ -19,8 +19,8 @@
     
     <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
     <p><a href='{% url 'support' %}'>Need some help?</a></p>
-    <p><a href='{% url 'editac' %}'>Edit account detial</a></p>
+    <p><a href='{% url 'editac' %}'>Edit account detail</a></p>
     
-    <a href='{% url 'login' %}'>logout</a><br>
+    <a href='{% url 'logout' %}'>logout</a><br>
     
 </html>
