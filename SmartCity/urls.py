@@ -50,10 +50,14 @@ urlpatterns = [
     url(r'^adminhome/entitylist/$', enviews.admin_entity_list, name = 'adminentitylist'),
                #url(r'^home/entitylist/(?P<entity_id>[0-9]+)/review/$', enviews.review, name = 'review'),
             
-    #msviewd
+    #msview
     url(r'^adminhome/messenger/$', msviews.admin_messenger, name = 'adminmessenger'),
-    url(r'^adminhome/messenger/(?P<receiver_id>[0-9]+)/$', msviews.individual_message, name = 'adminindividualmessage'),
+    url(r'^adminhome/messenger/(?P<receiver_id>[0-9]+)/$', msviews.conversation, name = 'adminconversation'),
+    url(r'^adminhome/messenger/(?P<receiver_id>[0-9]+)/add/$', msviews.add_message, name = 'add_message'),
+    url(r'^adminhome/messenger/startnew/$', msviews.start_new_conversation, name = 'startnewconversation'),
+    url(r'^adminhome/messenger/startnew/create/(?P<receiver_id>[0-9]+)/$', msviews.create_conversation, name = 'createconversation'),
     url(r'^home/support/sent/$', msviews.help_message, name = 'helpmessage'),
+               
                
     
     

@@ -2,31 +2,24 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 from .models import Entity
 from django.template import loader
-
-
-
-def user_ver(request):
-    try:
-        request.session[user_id]
-    except KeyError:
-        return Http404("Unknown user")
+from user_ver import user_ver
 
 # Create your views here.             ENTITY VIEW
 
 def list(request):
-    user_ver(request)
+    user_ver(request, False)
     context = {'entity_list': Entity.objects.all() }
     return render(request, 'entity/list.html', context)
 
 def detail(request, entity_id):
-    user_ver(request)
+    user_ver(request, False)
     context = {'entity': get_object_or_404(Entity, id = entity_id)}
     return render(request, 'entity/detail.html', context)
 
 #ADMIN
 
 def admin_entity_list(request):
-    user_ver(request)
+    user_ver(request, True)
     context = {}
     return render(request, 'admin/admin_home.html', context)
 

@@ -1,17 +1,13 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from .models import Account
 from django.template import loader
 from django.utils.datastructures import MultiValueDictKeyError
 from django.conf.urls import url
-#from Smartcity import urls
-
-
-def user_ver(request):
-    try:
-        request.session[user_id]
-    except KeyError:
-        return Http404("Unknown user")
+from user_ver import user_ver
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+#return HttpResponseRedirect(reverse('adminconversation', args=(receiver_id,)))
 
 # Create your views here.             ACCOUNT VIEW
 
@@ -26,7 +22,7 @@ def loginver(request):
             if ac.password == request.POST['password']:
                 if ac.account_type == 'Admin':
                     request.session['user_id'] = ac.id
-                    return render(request, 'admin/admin_home.html', {'username': ac.username})
+                    return render(request, 'admin/admin_home.html', {'username': ac.username, 'ac': ac})
                 request.session['user_id'] = ac.id
                 return render(request, 'home/home.html', {'username': ac.username})
 
@@ -38,6 +34,7 @@ def createac(request):
     return render(request, 'account/createac.html', context)
 
 def createadmin(request):
+    user_ver(request, True)
     context = {'admin': True}
     return render(request, 'account/createac.html', context)
 
@@ -71,6 +68,8 @@ def createprocess(request):
     return redirect('../')
 
 def createadminprocess(request):
+    user_ver(request, True)
+    
     name = request.POST['name']
     password = request.POST['password']
     confirmpw = request.POST['confirm_password']
@@ -85,7 +84,7 @@ def createadminprocess(request):
     if password != confirmpw:
         return render(request, 'account/createac.html', {'error_message': "Your password does not match.", 'admin': True})
 
-    newac = Account(account_type = 'admin', username = name, password = password, phone_number = phoneno, email_address = email, residential_address = address)
+    newac = Account(account_type = 'Admin', username = name, password = password, phone_number = phoneno, email_address = email, residential_address = address)
     
     newac.save()
     
@@ -94,20 +93,40 @@ def createadminprocess(request):
 
 
 def editac(request):
-    user_ver(request)
+    user_ver(request, False)
     context = {'ac': Account.objects.get(id=request.session['user_id'])}
     return render(request, 'account/edit_account_details.html', context)
 
 def editacsave(request):
-    user_ver(request)
+    user_ver(request, False)
+    user_ac = Account.objects.get(id=request.session['user_id'])
     
+    user_ac.username = request.POST['Username']
+    user_ac.residential_address = request.POST['address']
+    user_ac.phone_number = request.POST['contactnumber']
+    user_ac.email_address = request.POST['emailaddress']
     
-    context = {'ac': Account.objects.get(id=request.session['user_id']), 'message': "Edit successful"}
+    old_pw = request.POST['old_password']
+    new_pw = request.POST['new_password']
+    confirm_pw = request.POST['confirm_password']
+    
+    error = "Edit successful"
+    if (user_ac.password == old_pw and new_pw == confirm_pw):
+        user_ac.password = new_pw
+    else:
+        error = "Invalid password"
+    
+    user_ac.save()
+    
+    context = {'ac': user_ac, 'message': error}
     return render(request, 'account/edit_account_details.html', context)
 
 def logout(request):
-    user_ver(request)
-    del request.session['user_id']
+    user_ver(request, False, True)
+    try:
+        del request.session['user_id']
+    except KeyError:
+        pass
     return redirect('../')
 
 

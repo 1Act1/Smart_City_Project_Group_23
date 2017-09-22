@@ -6,26 +6,24 @@
 <h1>Admin messenger </h1>
 
 <p>Messsages</p>
-{% for each in message_list %}
-<li><a href='{% url 'adminmessenger' %}'>
-{% for account in account_list %}
-{% if each.senderid == account.id %}
-    {{ account.username }}
-    {% endif %}
-    {% endfor %}
-    
-    to
-{% for account in account_list %}
+{% for each in conversation_list %}
 
-{% if each.receiverid == account.id %}
-{{ account.username }}
+
+{% for account in account_list %}
+{% if account.id == each  %}
+<li>
+    Conversation with:
+    <a href='{% url 'adminconversation' account.id %}'>
+        {{account.username}}
+    </a>
+    
 {% endif %}
 {% endfor %}
-    </a>
 {% endfor %}
+<br><br>
 
 
-<p>Start new Conversation</p>
+<br><a href='{% url 'startnewconversation' %}'>Start New Conversation</a><br>
 <br><a href='{% url 'adminhome' %}'>Back to home</a><br>
 
 </body>
