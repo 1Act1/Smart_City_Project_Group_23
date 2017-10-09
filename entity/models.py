@@ -7,6 +7,8 @@ class Entity(models.Model):
     address = models.CharField(max_length = 100)
     photolink = models.CharField(max_length = 200, default = 'https://aotw-pd.s3.amazonaws.com/media-vimeo/70533052.jpg')
     officallink = models.CharField(max_length = 200, default = 'https://www.google.com')
+    positive_review = models.IntegerField(default = 0)
+    negative_review = models.IntegerField(default = 0)
 
     def __str__(self):
-        return str(self.id) + ' ' + self.name 
+        return str(self.id) + ' ' + self.name

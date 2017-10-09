@@ -42,13 +42,20 @@ urlpatterns = [
     url(r'^editacdetail/$', acviews.editac, name = 'editac'),
     url(r'^editacdetail/save/$', acviews.editacsave, name = 'editacsave'),
     url(r'^adminhome/createadmin/$', acviews.createadmin, name = 'createadmin'),
-               
+    url(r'^recoverac/$', acviews.recoverac, name = 'recoverac'),
+    url(r'^recoverac/username/$', acviews.recoverusername, name = 'recoverusername'),
+    url(r'^recoverac/password/$', acviews.recoverpassword, name = 'recoverpassword'),
+    url(r'^recoverac/password/confirm/$', acviews.recoverpasswordconfirm, name = 'recoverpasswordconfirm'),
     
     #enviews
     url(r'^home/entitylist/$', enviews.list, name = 'list'),
     url(r'^home/entitylist/(?P<entity_id>[0-9]+)/$', enviews.detail, name = 'detail'),
+    url(r'^home/entitylist/(?P<entity_id>[0-9]+)/review/$', enviews.review, name = 'review'),
+    url(r'^home/entitylist/search/$', enviews.search, name = 'search'),
     url(r'^adminhome/entitylist/$', enviews.admin_entity_list, name = 'adminentitylist'),
-               #url(r'^home/entitylist/(?P<entity_id>[0-9]+)/review/$', enviews.review, name = 'review'),
+    url(r'^adminhome/entitylist/(?P<entity_id>[0-9]+)/$', enviews.edit_entity, name = 'editentity'),
+    url(r'^adminhome/entitylist/(?P<entity_id>[0-9]+)/save/$', enviews.edit_entity_save, name = 'editentitysave'),
+    url(r'^adminhome/entitylist/search/$', enviews.adminsearch, name = 'adminsearch'),
             
     #msview
     url(r'^adminhome/messenger/$', msviews.admin_messenger, name = 'adminmessenger'),

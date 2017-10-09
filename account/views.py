@@ -4,14 +4,28 @@ from .models import Account
 from django.template import loader
 from django.utils.datastructures import MultiValueDictKeyError
 from django.conf.urls import url
-from user_ver import user_ver
+from user_ver import user_ver, recover_ver
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
+from random import randint
 #return HttpResponseRedirect(reverse('adminconversation', args=(receiver_id,)))
 
 # Create your views here.             ACCOUNT VIEW
 
 def login(request):
+    try:
+        del request.session['recover_id']
+    except KeyError:
+        pass
+    try:
+        del request.session['secretcode']
+    except KeyError:
+        pass
+    try:
+        del request.session['user_id']
+    except KeyError:
+        pass
     context = {} #parameters passing to the html: {'accounts' = all_accounts}
     return render(request, 'account/login.html', context)
 
@@ -57,6 +71,9 @@ def createprocess(request):
     for ac in Account.objects.all():
         if ac.username == name:
             return render(request, 'account/createac.html', {'error_message': "This username have been chosen."})
+        if ac.email_address == email:
+            return render(request, 'account/createac.html', {'error_message': "This email have been registered."})
+
 
     if password != confirmpw:
         return render(request, 'account/createac.html', {'error_message': "Your password does not match."})
@@ -66,6 +83,7 @@ def createprocess(request):
     newac.save()
     
     return redirect('../')
+
 
 def createadminprocess(request):
     user_ver(request, True)
@@ -80,6 +98,8 @@ def createadminprocess(request):
     for ac in Account.objects.all():
         if ac.username == name:
             return render(request, 'account/createac.html', {'error_message': "This username have been chosen.", 'admin': True})
+        if ac.email_address == email:
+            return render(request, 'account/createac.html', {'error_message': "This email have been registered."})
 
     if password != confirmpw:
         return render(request, 'account/createac.html', {'error_message': "Your password does not match.", 'admin': True})
@@ -99,27 +119,98 @@ def editac(request):
 
 def editacsave(request):
     user_ver(request, False)
+    all_ac = Account.objects.all()
     user_ac = Account.objects.get(id=request.session['user_id'])
     
-    user_ac.username = request.POST['Username']
-    user_ac.residential_address = request.POST['address']
-    user_ac.phone_number = request.POST['contactnumber']
-    user_ac.email_address = request.POST['emailaddress']
+    acname = request.POST['Username']
+    acemail = request.POST['emailaddress']
+    error = "Edit successful"
     
+    for ac in all_ac:
+        if acname != user_ac.username and ac.username == acname:
+            error = "This username have been chosen."
+        if acemail != user_ac.email_address and ac.email_address == acemail:
+            error = "This email have been registered."
+
     old_pw = request.POST['old_password']
     new_pw = request.POST['new_password']
     confirm_pw = request.POST['confirm_password']
-    
-    error = "Edit successful"
-    if (user_ac.password == old_pw and new_pw == confirm_pw):
-        user_ac.password = new_pw
-    else:
-        error = "Invalid password"
-    
-    user_ac.save()
+
+    if (old_pw):
+        if (user_ac.password == old_pw and new_pw == confirm_pw):
+            user_ac.password = new_pw
+        else:
+            error = "Invalid password"
+
+    if error == "Edit successful":
+        user_ac.username = acname
+        user_ac.email_address = acemail
+        user_ac.residential_address = request.POST['address']
+        user_ac.phone_number = request.POST['contactnumber']
+        user_ac.save()
     
     context = {'ac': user_ac, 'message': error}
     return render(request, 'account/edit_account_details.html', context)
+
+def recoverac(request):
+    return render(request, 'account/recover_account.html')
+
+def recoverusername(request):
+    try:
+        ac = Account.objects.filter(email_address = request.POST['email'])
+    except MultiValueDictKeyError:
+        raise Http404("Unknown ID")
+
+    if (not ac):
+        return render(request, 'account/recover_account.html', {'warning': "This email does not exist"})
+    request.session['recover_id'] = ac[0].id
+    context = {'username': ac[0].username}
+    return render(request, 'account/recover_username.html', context)
+
+def recoverpassword(request):
+    recover_ver(request, False, True)
+    ac = Account.objects.get(id = request.session['recover_id'])
+    #secretcode = ""
+    #secretcode = (str)randint(0, 9)
+    #for each in range(5):
+    #    secretcode += (str)randint(0, 9)
+    secretcode = "123456"
+    request.session['secretcode'] = secretcode
+    #send_mail('Account Recovery Email for Smart City', 'Hello, ' + ac.username + '\nHere is your secret code: ' + secretcode, 'sc@smartcity.com', [ac.email_address], fail_silently=False,)
+    context = {}
+    return render(request, 'account/recover_password.html', context)
+
+def recoverpasswordconfirm(request):
+    recover_ver(request, False, True)
+    
+    actualcode = request.session['secretcode']
+    secretcode = request.POST['secretcode']
+    if actualcode != secretcode:
+        context = {'error_message': 'Incorrect code! Recovery failed'}
+        return render(request, 'account/login.html', context)
+    
+    new_password = request.POST['password']
+    confirm_password = request.POST['confirmpassword']
+    if new_password != confirm_password:
+        context = {'error_message': 'Different password given! Recovery failed'}
+        return render(request, 'account/login.html', context)
+
+    ac = Account.objects.get(id = request.session['recover_id'])
+    ac.password = new_password
+    ac.save()
+
+    #logout of recover_id
+    try:
+        del request.session['recover_id']
+    except KeyError:
+        pass
+    try:
+        del request.session['secretcode']
+    except KeyError:
+        pass
+    context = {'error_message': 'Password saved'}
+    return render(request, 'account/login.html', context)
+
 
 def logout(request):
     user_ver(request, False, True)

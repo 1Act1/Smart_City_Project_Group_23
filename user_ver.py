@@ -17,3 +17,20 @@ def user_ver(request, admin, both = False):
         else:
             if Account.objects.get(id=b).account_type == "Admin":
                 raise Http404("Unauthorized access")
+
+def recover_ver(request, admin, both = False):
+    try:
+        a = request.session.get('recover_id')
+        b = request.session['recover_id']
+    except (KeyError):
+        raise Http404("Unknown ID")
+    else:
+        if both :
+            return
+        if admin :
+            if Account.objects.get(id=b).account_type != "Admin":
+                raise Http404("Unauthorized access")
+        else:
+            if Account.objects.get(id=b).account_type == "Admin":
+                raise Http404("Unauthorized access")
+

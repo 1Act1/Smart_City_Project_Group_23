@@ -6,17 +6,15 @@
     {% endif %}
     <br><br>
     
-    <form action=
     {% if admin %}
-    '{% url 'adminsearch' %}'
+    <form action='{% url 'adminsearch' %}' method="POST">
     {% else %}
-    '{% url 'search' %}'
+    <form action='{% url 'search' %}' method="POST">
     {% endif %}
-     method="POST">
-        
+            
         {% csrf_token %}
         <input type='text' name='search_input' value=''>
-        
+            
         <input type='submit' name='search' value='search'><br>
     </form>
     
@@ -28,19 +26,10 @@
     <li><a href='{% url 'detail' entity.id %}'>{{ entity.name }}</a>
     {% endif %}
     {% endfor %}
+    {% if entity_list == NULL %}
+    no result found
+    {% endif %}
     </ol>
-    {% if not entity_list %}
-    No result found
-    {% endif %}
-    <br><br>
-    
-    {% if search %}
-    {% if admin %}
-    <a href='{% url 'adminentitylist' %}'>Back to full list</a>
-    {% else %}
-    <a href='{% url 'list' %}'>Back to full list</a>
-    {% endif %}
-    {% endif %}
     <br><br>
     
     {% if admin %}
