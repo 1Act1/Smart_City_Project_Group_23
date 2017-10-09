@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
-from .models import Entity
+from .models import Entity, EntityComment
 from django.template import loader
 from user_ver import user_ver
 from django.urls import reverse
@@ -74,7 +74,7 @@ def review(request, entity_id):
     comment = request.POST['commentbox']
     try:
         selected = request.POST['review']
-    except MultiValueDictKeyError:
+    except:
         selected = '0'
 
     if (selected == 'Good' or selected == 'Bad'):
@@ -85,7 +85,10 @@ def review(request, entity_id):
         entity.save()
 
     if comment:
-        pass
+        new_comment = EntityComment()
+        new_comment.entity_id = entity_id
+        new_comment.comment = comment
+        new_comment.save()
 
     return HttpResponseRedirect(reverse('detail', args=(entity_id,)))
 

@@ -12,3 +12,7 @@ class Entity(models.Model):
 
     def __str__(self):
         return str(self.id) + ' ' + self.name
+
+class EntityComment(models.Model):
+    entity_id = models.IntegerField()
+    comment = models.CharField(max_length = 300)
