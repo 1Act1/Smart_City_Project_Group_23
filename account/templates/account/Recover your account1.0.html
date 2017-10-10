@@ -1,0 +1,55 @@
+<html>
+	<style>
+header, footer {
+    width: 100%;
+    height: 35px ;
+    color: white;
+    padding: 1px;
+    background-color: green;
+    
+}
+nav {
+    background-color: lightgrey;
+    width: 300px;
+    border: 25px solid green;
+    padding: 25px;
+    margin: 25px;
+    text-align: center;
+}
+</style>
+<header>
+	<table  width='100%'>
+<tr>
+<td width='10px'>
+<img src="../../static/LOGO.png" alt="logo" style="width:30px;height:30px;">
+</td>
+<td>
+<center>
+<font size="5" color="white">
+	Recover your account
+</font>
+</center>
+
+</td>
+<tr>
+</table>
+
+</header>
+<center>
+ <nav>
+    {% if warning %}
+    <br><br>
+    <p><strong>{{warning}}</strong></p>
+    <br><br>
+    {% endif %}
+    
+    <form action= '{% url 'recoverusername' %}' method="POST">
+        {% csrf_token %}
+        <label>Enter your registered email:</label><br>
+        <input id="email" type="text" name="email" maxlength="100" required />
+        <input type='submit' value='Recover'>
+    </form>
+
+    <a href='{% url 'login' %}'>Back to login page</a><br>
+    </nav>
+</html>
