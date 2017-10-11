@@ -1,17 +1,39 @@
 <!DOCTYPE html>
 <html>
-<head>
-</head>
+<style>
+header, footer {
+    width: 100%;
+    height: 35px ;
+    color: white;
+    padding: 1px;
+    background-color: green;
+    
+}
+div {
+    background-color: #e6e6e6;
+    
+}
+</style>
 <body>
-<h1> Conversation with
+<header>
+<table  width='100%'>
+<tr>
+<td width='20px'>
+<img src="../../static/LOGO.png" alt="logo" style="width:30px;height:30px;">
+</td>
+<td>
+ Conversation with
     {% for account in account_list %}
     {% if account.id == receiver_id %}
     {{account.username}}
     {% endif %}
     {% endfor %}
-</h1><br>
-
-<h2>{{receiver_username}}</h2>
+</td>
+<tr>
+</table>
+</header>
+<div>
+<h1>{{receiver_username}}</h1>
 
 
 <div class="chip">
@@ -39,6 +61,6 @@
 
 <br><a href='{% url 'adminmessenger' %}'>Back to Messenger</a><br>
 <br><a href='{% url 'adminhome' %}'>Back to home</a><br>
-
+<div>
 </body>
 </html>

@@ -1,0 +1,14 @@
+<html>
+	<h1>Recover your account</h1><br><br>
+    
+    <form action= '{% url 'recoverpassword' %}' method="POST">
+        {% csrf_token %}
+        <label>Your username: {{ username }}</label><br><br>
+        
+        <label>Forget your password?</label><br>
+        <input type='submit' value='Recover my password'>
+    </form>
+    
+    <a href='{% url 'login' %}'>Back to login page</a><br>
+    
+</html>

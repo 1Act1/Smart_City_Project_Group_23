@@ -30,6 +30,11 @@ def login(request):
     return render(request, 'account/login.html', context)
 
 def loginver(request):
+    try :
+        request.POST['name']
+    except:
+        user_ver(request, False);
+    
     for ac in Account.objects.all():
         if ac.username == request.POST['name']:
             acID = ac.id

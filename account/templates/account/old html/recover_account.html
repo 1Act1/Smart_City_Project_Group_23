@@ -1,0 +1,19 @@
+<html>
+	<h1>Recover your account</h1><br><br>
+    
+    {% if warning %}
+    <br><br>
+    <p><strong>{{warning}}</strong></p>
+    <br><br>
+    {% endif %}
+    
+    <form action= '{% url 'recoverusername' %}' method="POST">
+        {% csrf_token %}
+        <label>Enter your registered email:</label><br>
+        <input id="email" type="text" name="email" maxlength="100" required />
+        <input type='submit' value='Recover'>
+    </form>
+
+    <a href='{% url 'login' %}'>Back to login page</a><br>
+    
+</html>

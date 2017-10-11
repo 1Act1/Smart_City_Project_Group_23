@@ -1,8 +1,35 @@
 <html>
+<style>
+header, footer {
+    width: 100%;
+    height: 35px ;
+    color: white;
+    padding: 1px;
+    background-color: green;
     
-    <h1>{{ entity.name }}</h1>
-    <img src={{ entity.photolink }}><br>
+}
+div {
+    width: 800px;
+    padding: 10px;
+    border: 5px solid gray;
+    margin: 0;
+}
+</style>
+ <header>
+<table  width='100%'>
+<tr>
+<td width='20px'>
+<img src="../../static/LOGO.png" alt="logo" style="width:30px;height:30px;">
+</td>
+<td>
+ {{ entity.name }}
+</td>
+<tr>
+</table>
+</header>   
+    <h1></h1>
     
+<div>    
     <p>
     {{ entity.description }}<br><br>
     
@@ -28,5 +55,5 @@
     
     <br><a href='{% url 'list' %}'>Back to list</a><br>
     <br><a href='{% url 'home' %}'>Back to home</a><br>
-    
+</div>    
 </html>

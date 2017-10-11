@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<h1> Conversation with
+    {% for account in account_list %}
+    {% if account.id == receiver_id %}
+    {{account.username}}
+    {% endif %}
+    {% endfor %}
+</h1><br>
+
+<h2>{{receiver_username}}</h2>
+
+
+<div class="chip">
+{% for each in messages %}
+
+    {% for account in account_list %}
+        {% if account.id == each.senderid %}
+            {{account.username}} : {{each.message}}
+                <br><br>
+        {% endif %}
+    {% endfor %}
+
+{% endfor %}
+</div>
+<br>
+<form action='{% url 'add_message' receiver_id %}' method="POST">
+    
+    {% csrf_token %}
+    
+    <textarea row = '10' cols = "100" name = "conversationbox" id = "conversationbox"></textarea>
+    <br>
+    
+    <input type='submit' name='send' value='send'><br>
+</form>
+
+<br><a href='{% url 'adminmessenger' %}'>Back to Messenger</a><br>
+<br><a href='{% url 'adminhome' %}'>Back to home</a><br>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<html>
+    {% if admin %}
+    <h1>Entity list</h1>
+    {% else %}
+	<h1>Facility list</h1>
+    {% endif %}
+    <br><br>
+    
+    {% if admin %}
+    <form action='{% url 'adminsearch' %}' method="POST">
+    {% else %}
+    <form action='{% url 'search' %}' method="POST">
+    {% endif %}
+            
+        {% csrf_token %}
+        <input type='text' name='search_input' value=''>
+            
+        <input type='submit' name='search' value='search'><br>
+    </form>
+    
+    <ol>
+    {% for entity in entity_list %}
+    {% if admin %}
+    <li><a href='{% url 'editentity' entity.id %}'>{{ entity.name }}</a>
+    {% else %}
+    <li><a href='{% url 'detail' entity.id %}'>{{ entity.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% if entity_list == NULL %}
+    no result found
+    {% endif %}
+    </ol>
+    <br><br>
+    
+    {% if admin %}
+    <br><a href='{% url 'editentity' 0 %}'>Create Entity</a><br>
+    <a href='{% url 'adminhome' %}'>back to home</a>
+    {% else %}
+    <a href='{% url 'home' %}'>back to home</a>
+    {% endif %}
+    <br>
+    
+</html>
