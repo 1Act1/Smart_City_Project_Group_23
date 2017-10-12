@@ -33,9 +33,11 @@ div {
     <p>
     {{ entity.description }}<br><br>
     
+    <img src="{{ entity.photolink }}" ><br>
+    
     Address: {{ entity.address }}<br><br>
     
-    Offical Link: {{ entity.officallink }}
+    Offical Link: <a href = "{{ entity.officallink }}"> {{ entity.officallink }} </a>
     </p>
     
     <form action='{% url 'review' entity.id %}' method="POST" >
@@ -51,6 +53,18 @@ div {
         
         <input type='submit' name='Submit' value='Submit'><br>
     </form>
+    
+    <br><br>
+    See what people say about {{ entity.name }}:<br>
+    
+    <textarea rows = 20 cols= 100 disabled >
+        Comments:
+        ----------------------------------------
+        {% for comment in comments %}
+        {{ comment.comment }}
+        ----------------------------------------
+        {% endfor %}
+    </textarea>
     
     
     <br><a href='{% url 'list' %}'>Back to list</a><br>

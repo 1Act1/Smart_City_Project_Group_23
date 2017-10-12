@@ -15,13 +15,24 @@ def list(request):
 
 def detail(request, entity_id):
     user_ver(request, False)
-    context = {'entity': get_object_or_404(Entity, id = entity_id)}
+    
+    comments = EntityComment.objects.filter(entity_id = entity_id)
+    count = EntityComment.objects.filter(entity_id = entity_id).count()
+    context = {'entity': get_object_or_404(Entity, id = entity_id), 'comments': comments, 'count': count}
     return render(request, 'entity/detail.html', context)
 
 def search(request):
     user_ver(request, False)
     input = request.POST['search_input']
-    context = {'entity_list': Entity.objects.filter(name__icontains = input), 'admin': False, 'search': True}
+    
+    try:
+        sort = request.POST['sort']
+    except:
+        sort = 'none'
+
+
+    
+    context = {'entity_list': Entity.objects.filter(name__icontains = input).order_by(sort), 'admin': False, 'search': True}
     return render(request, 'entity/list.html', context)
 
 

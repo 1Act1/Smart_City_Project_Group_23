@@ -43,9 +43,17 @@ div {
      method="POST">
         
         {% csrf_token %}
-        <input type='text' name='search_input' value=''>
+        <input type='text' name='search_input' value=''><br>
         
+            
+            Sort by:<br>
+        <input type="radio" name="sort" value="name"> Name <br>
+        <input type="radio" name="sort" value="positive_review"> Most Positive review<br>
+        <input type="radio" name="sort" value="negative_review"> Most Negative review <br>
+        <input type="radio" name="sort" value="comment"> Most comments <br>
+            
         <input type='submit' name='search' value='search'><br>
+        <br>
     </form>
     
     <ol>
