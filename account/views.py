@@ -7,8 +7,10 @@ from django.conf.urls import url
 from user_ver import user_ver, recover_ver
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.conf import settings
 from django.core.mail import send_mail
 from random import randint
+from math import log
 #return HttpResponseRedirect(reverse('adminconversation', args=(receiver_id,)))
 
 # Create your views here.             ACCOUNT VIEW
@@ -175,13 +177,24 @@ def recoverusername(request):
 def recoverpassword(request):
     recover_ver(request, False, True)
     ac = Account.objects.get(id = request.session['recover_id'])
-    #secretcode = ""
-    #secretcode = (str)randint(0, 9)
-    #for each in range(5):
-    #    secretcode += (str)randint(0, 9)
-    secretcode = "123456"
+    
+    rand = randint(0, 999999)
+    secretcode = ''
+    for each in range(5 - (int)(log(rand, 10))):
+        secretcode += '0'
+    secretcode += str(rand)
+    #secretcode = "123456"
     request.session['secretcode'] = secretcode
-    #send_mail('Account Recovery Email for Smart City', 'Hello, ' + ac.username + '\nHere is your secret code: ' + secretcode, 'sc@smartcity.com', [ac.email_address], fail_silently=False,)
+
+    subject = 'Account Recovery Email from Smart City'
+    from_email = settings.DEFAULT_FROM_EMAIL
+    message = ''
+    recipient_list = [ac.email_address]
+    html_message = '<h3>' + 'Hello, ' + ac.username + '<br><br>Here is your secret code: ' + secretcode + '<br><br>Smart City</h3>'
+
+
+    send_mail(subject, message, from_email, recipient_list, fail_silently=False, html_message=html_message)
+    
     context = {}
     return render(request, 'account/recover_password.html', context)
 

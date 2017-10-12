@@ -9,6 +9,7 @@ class Entity(models.Model):
     officallink = models.CharField(max_length = 200, default = 'https://www.google.com')
     positive_review = models.IntegerField(default = 0)
     negative_review = models.IntegerField(default = 0)
+    comment = models.IntegerField(default = 0)
 
     def __str__(self):
         return str(self.id) + ' ' + self.name

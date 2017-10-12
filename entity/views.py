@@ -30,9 +30,19 @@ def search(request):
     except:
         sort = 'none'
 
+    if (not input) and sort == 'none':
+        return HttpResponseRedirect(reverse('list', args=()))
 
+
+    if sort == 'none':
+         entity_list = Entity.objects.filter(name__icontains = input)
+    if sort == 'name': #ascending
+        entity_list = Entity.objects.filter(name__icontains = input).order_by(sort)
+    else : #descending
+        sort = '-' + sort
+        entity_list = Entity.objects.filter(name__icontains = input).order_by(sort)
     
-    context = {'entity_list': Entity.objects.filter(name__icontains = input).order_by(sort), 'admin': False, 'search': True}
+    context = {'entity_list': entity_list, 'admin': False, 'search': True}
     return render(request, 'entity/list.html', context)
 
 
@@ -100,6 +110,8 @@ def review(request, entity_id):
         new_comment.entity_id = entity_id
         new_comment.comment = comment
         new_comment.save()
+        entity.comment += 1
+        entity.save()
 
     return HttpResponseRedirect(reverse('detail', args=(entity_id,)))
 
