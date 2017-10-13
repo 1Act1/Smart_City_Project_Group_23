@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # gmail settings
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'smartcity23'
-EMAIL_HOST_PASSWORD = 'secret23'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
