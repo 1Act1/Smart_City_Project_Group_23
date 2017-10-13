@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
         
     #hmviews
-    url(r'^home/$', hmviews.home, name = 'home'),
+    url(r'^home/$', hmviews.home, name = 'userhome'),
     url(r'^home/support/$', hmviews.support, name = 'support'),
     url(r'^adminhome/$', hmviews.admin_home, name = 'adminhome'),
                
@@ -58,12 +58,14 @@ urlpatterns = [
     url(r'^adminhome/entitylist/search/$', enviews.adminsearch, name = 'adminsearch'),
             
     #msview
+    url(r'^home/support/sent/$', msviews.help_message, name = 'helpmessage'),
+    url(r'^home/support/messenger/$', msviews.user_messenger, name = 'usermessenger'),
+    url(r'^home/support/messenger/(?P<receiver_id>[0-9]+)/$', msviews.conversation, name = 'userconversation'),
     url(r'^adminhome/messenger/$', msviews.admin_messenger, name = 'adminmessenger'),
     url(r'^adminhome/messenger/(?P<receiver_id>[0-9]+)/$', msviews.conversation, name = 'adminconversation'),
     url(r'^adminhome/messenger/(?P<receiver_id>[0-9]+)/add/$', msviews.add_message, name = 'add_message'),
     url(r'^adminhome/messenger/startnew/$', msviews.start_new_conversation, name = 'startnewconversation'),
     url(r'^adminhome/messenger/startnew/create/(?P<receiver_id>[0-9]+)/$', msviews.create_conversation, name = 'createconversation'),
-    url(r'^home/support/sent/$', msviews.help_message, name = 'helpmessage'),
                
                
     

@@ -17,6 +17,8 @@
             
     <input type='submit' name='send' value='send'><br>
     </form>
+    
+    <a href = '{% url 'usermessenger' %}'>View your previous conversation</a>
             
     {% if message %}
     <br>
@@ -24,7 +26,7 @@
     <br>
     {% endif %}
             
-<br><br><a href='{% url 'home' %}'>back to home</a><br>
+<br><br><a href='{% url 'userhome' %}'>back to home</a><br>
             
 </body>
 </html>

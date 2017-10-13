@@ -9,13 +9,12 @@ from django.http import HttpResponseRedirect
 
 # Create your views here.              MESSENGER VIEW
 
-def admin_messenger(request):
-    user_ver(request, True)
+def user_messenger(request):
+    user_ver(request, False)
     admin_id = request.session['user_id']
     
     x = []
     message_list = Message.objects.all()
-    sender = False
     
     for message in message_list:
         if message.receiverid != admin_id and message.senderid != admin_id:
@@ -32,11 +31,37 @@ def admin_messenger(request):
                 else:
                     message_list.exclude(id = message.id)
 
-    context = {'conversation_list': x, 'account_list' : Account.objects.all() }
-    return render(request, 'admin/admin_messenger.html', context)
+    context = {'conversation_list': x, 'account_list' : Account.objects.all(), 'admin': False }
+    return render(request, 'messenger/messenger.html', context)
+
+def admin_messenger(request):
+    user_ver(request, True)
+    admin_id = request.session['user_id']
+    
+    x = []
+    message_list = Message.objects.all()
+    #sender = False
+    
+    for message in message_list:
+        if message.receiverid != admin_id and message.senderid != admin_id:
+            message_list.exclude(id = message.id)
+        else:
+            if message.receiverid != admin_id:
+                if message.receiverid not in x:
+                    x.append(message.receiverid)
+                else:
+                    message_list.exclude(id = message.id)
+            else:
+                if message.senderid not in x:
+                    x.append(message.senderid)
+                else:
+                    message_list.exclude(id = message.id)
+
+    context = {'conversation_list': x, 'account_list' : Account.objects.all(), 'admin': True }
+    return render(request, 'messenger/messenger.html', context)
 
 def conversation(request, receiver_id):
-    user_ver(request, True)
+    user_ver(request, False, True)
     x = []
     admin_id = request.session['user_id']
     messages = Message.objects.order_by('deliver_date', 'deliver_time').all()
@@ -48,20 +73,33 @@ def conversation(request, receiver_id):
         #if (not (((each.receiverid == receiver_id) and (each.senderid == admin_id))or ((each.receiverid == admin_id) and (each.senderid == receiver_id)))):
     
     #messages.exclude(id = each.id)
+    if not x:
+        raise Http404("Invalid request");
 
-    context = {'messages': x, 'account_list': Account.objects.all(), 'receiver_id': int(receiver_id)}
-    return render(request, 'admin/admin_conversation.html', context)
+    if Account.objects.get(id = request.session['user_id']).account_type == "Admin":
+        admin = True
+    else:
+        admin = False
+    context = {'messages': x, 'account_list': Account.objects.all(), 'receiver_id': int(receiver_id), 'admin': admin}
+    return render(request, 'messenger/conversation.html', context)
 
 def add_message(request, receiver_id):
-    user_ver(request, True)
+    user_ver(request, False, True)
     
-    my_message = request.POST['conversationbox']
+    try:
+        my_message = request.POST['conversationbox']
+    except:
+        raise Http404("Invalid request")
+    
     
     if my_message != "":
         a = Message(senderid = request.session['user_id'], receiverid = receiver_id, message = my_message)
         a.save()
-    
-    return HttpResponseRedirect(reverse('adminconversation', args=(receiver_id,)))
+
+    if Account.objects.get(id = request.session['user_id']).account_type == "Admin":
+        return HttpResponseRedirect(reverse('adminconversation', args=(receiver_id,)))
+    else:
+        return HttpResponseRedirect(reverse('userconversation', args=(receiver_id,)))
 
 
 def start_new_conversation(request):
