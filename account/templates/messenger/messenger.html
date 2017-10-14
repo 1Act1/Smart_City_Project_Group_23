@@ -122,7 +122,7 @@ header{
 
 .row3{
 	background-color:#383838;
-	opacity: 0.3;
+	opacity: 0.5;
     filter: alpha(opacity=30);
 }
 
@@ -178,10 +178,10 @@ header{
 		<div class="row">
 			<header>
 				<nav>
-				<img src= "logo.png" width="150" height= "80">
+				<img src= "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/logo.jpg" width="150" height= "80">
                     <ul>
                         {% if admin %}
-                        <li><a href="{% url 'list' %}">List of Entity</a></li>
+                        <li><a href="{% url 'adminentitylist' %}">List of Entity</a></li>
                         <li><a href="{% url 'createadmin' %}">Create Admin</a></li>
                         <li><a href="{% url 'adminmessenger' %}">Messenger</a></li>
                         {% else %}
@@ -217,12 +217,13 @@ header{
                         Conversation with:
                         <a href=
                            {%if admin%} 
-                           '{% url ' adminconversation'
-                           {%else  %}
-                           '{% url ' userconversation'
-                           {%endif%}
-                           account.id %}'>
+                           '{% url 'adminconversation' account.id %}'>
+                           {% else %}
+                           '{% url 'userconversation' account.id %}'>
+                           {% endif %}
+                           <font color="white">
                             {{account.username}}
+                            </font>
                         </a>
 
                         {% endif %}
@@ -241,7 +242,7 @@ header{
 				<div class= "link-container">
 					<a href='{% url 'startnewconversation' %}' class="button3">Start New Conversation</a>
 					<div class="img2">
-						<img src = "chat.jpg" alt="chat icon" width="250" height= "250"/>
+						<img src = "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/chat.jpg" alt="chat icon" width="250" height= "250"/>
 					</div>
 				</div>
 				
@@ -259,7 +260,7 @@ header{
                 <a href="{% url 'userhome' %}" class="button4">Back to home</a>
             {% endif %}
 					<div class="img1">
-						<img src = "home.png" alt="home icon" width="150" height= "150"/>
+						<img src = "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/home.png" alt="home icon" width="150" height= "150"/>
 					</div>
 				</div>
 			</div>

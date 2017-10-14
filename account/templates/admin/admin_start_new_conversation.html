@@ -125,7 +125,7 @@
 
     .row3{
         background-color:#383838;
-        opacity: 0.3;
+        opacity: 0.6;
         filter: alpha(opacity=30);
         text-align: center;
     }
@@ -184,9 +184,9 @@
 		<div class="row">
 			<header>
 				<nav>
-				<img src= "logo.png" width="150" height= "80">
+				<img src= "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/logo.jpg" width="150" height= "80">
 				<ul>
-                    <li><a href="{% url 'list' %}">List of Entity</a></li>
+                    <li><a href="{% url 'adminentitylist' %}">List of Entity</a></li>
                     <li><a href="{% url 'createadmin' %}">Create Admin</a></li>
                     <li><a href="{% url 'adminmessenger' %}">Messenger</a></li>
                     <li><a href="{% url 'logout' %}">Logout</a></li>
@@ -216,7 +216,7 @@
                         <div class="chip">
                             <img src="https://image.flaticon.com/icons/png/512/36/36601.png" alt="Person" width="96" height="96">
 
-                            <a href='{% url ' createconversation' each.id %}'>{{each.username}}</a>
+                            <a href='{% url 'createconversation' each.id %}'>{{each.username}}</a>
                         </div><br><br><br>{% endif %}
                         {% endfor %}
 
@@ -235,7 +235,7 @@
                 <div class= "link-container">
                     <a href= '{% url 'adminmessenger' %}' class="button3">Back to my Message</a>
                     <div class="img2">
-                        <img src = "w.png" alt="message icon" width="150" height= "150"/>
+                        <img src = "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/w.jpg" alt="message icon" width="150" height= "150"/>
                     </div>
                 </div>
                 
@@ -247,7 +247,7 @@
 				<div class= "link-container">
 					<a href="{% url 'adminhome' %}" class="button4">Back to home</a>
 					<div class="img1">
-						<img src = "home.png" alt="home icon" width="150" height= "150"/>
+						<img src = "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/home.png" alt="home icon" width="150" height= "150"/>
 					</div>
 				</div>
 			</div>

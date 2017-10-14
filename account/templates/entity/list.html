@@ -1,92 +1,318 @@
+<!DOCTYPE html>
 <html>
+<head>
+<meta name="viewport" content="width = device-width, initial-scale = 1">
+<title>List</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
 <style>
-header, footer {
-    width: 100%;
-    height: 35px ;
-    color: white;
-    padding: 1px;
-    background-color: green;
-    
-}
-div {
-    width: 550px;
-    padding: 10px;
-    border: 5px solid gray;
-    margin: 0;
-}
+    <!-- -->
+
+    <!--Header-->
+    *{
+        margin: 0;
+        padding: 0;
+    }
+
+    nav{
+        width: 100%;
+        height: 80px;
+        background-color: #383838;
+        line-height: 60px;
+    }
+
+    nav ul{
+        float: right;
+        margin-right: 20px;
+    }
+
+    nav ul li{
+        list-style-type: none;
+        display: inline-block;
+        transition: 0.8s all;
+    }
+
+    nav ul li:hover{
+        background-color: #808080;
+    }
+
+    nav ul li a{
+        text-decoration: none;
+        color: #fff;
+        padding: 10px;
+        font-family: 'Amatic SC', cursive;
+
+    }
+
+    <!--Grid -->
+    .container {
+        width: 100%; /*Set the width of the entire website here */
+        margin-right: auto;
+        margin-left: auto; /* Margin-left and right are set to auto to center the container */
+    }
+    .six:first-child {
+        margin-left: 0; /* This line of code makes the left-most column align to the left of the screen */
+    }
+
+    .six {
+        width: 49%; /* This div spans six columns (the entire row)*/
+        float: left;
+        margin-left: 2%;
+    }
+
+
+    .row {
+        width: 100%;
+        clear: both; /* Clear creates new styles for the next row */
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .row3{
+        height: 333px;
+        color: #383838;
+        font-family: 'Amatic SC', cursive;
+        font-size: 20px;
+    }
+
+    .row4 .six{
+        height: 333px;
+
+    }
+
+    header{
+        height: 60px;
+        background-color: #383838;
+    }
+
+    .bigImg{
+        height: 80px;
+        background-color:#fff;
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+    .row4 .left{
+
+    }
+
+    .row4 .right{
+
+    }
+
+
+    .row4 .left:hover {
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+    }
+
+    .row4 .right:hover {
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+    }
+
+    .last{
+        height: 40px;
+        background-color: #383838;
+    }
+
+    .space{
+        height: 30px;
+    }
+
+    .row3{
+        background-color:#383838;
+        opacity: 0.6;
+    filter: alpha(opacity=30);
+    }
+
+    .row4{
+        padding-top: 30px;
+        opacity: 0.6;
+        filter: alpha(opacity=60);
+    }
+
+
+    .button1, .button2{
+        color: #383838;
+        font-family: 'Amatic SC', cursive;
+        font-size: 40px;
+
+    }
+
+    .button4, .button3{
+        color: #383838;
+        font-family: 'Amatic SC', cursive;
+        font-size: 40px;
+    }
+
+    .link-container {
+        text-align: center;
+    }
+
+
+    .welcome1{
+        color: #383838;
+        font-family: 'Amatic SC', cursive;
+        font-size: 35px;
+        text-decoration: underline;
+    }
+
+    .img1{
+        padding-top: 50px;
+    }
+
+    .entity{
+        color: #fff;
+        font-family: 'Amatic SC', cursive;
+        font-size: 20px;
+        padding-left:50px;
+        padding-top: 10px;
+
+    }
+
 </style>
- <header>
-<table  width='100%'>
-<tr>
-<td width='20px'>
-<img src="../../static/LOGO.png" alt="logo" style="width:30px;height:30px;">
-</td>
-<tr>
-</table>
-</header>
-<center>
-<div>
+</head>
+<body>
+	<div class="container">
+		<!--Row 1-->
+		<div class="row">
+			<header>
+				<nav>
+                    {% if admin %}
+                    <a href="{% url 'adminhome' %}">
+                        <img src="https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/logo.jpg" width="150" height="80">
+                    </a>
+                    {% else %}
+                    <a href="{% url 'userhome' %}">
+                        <img src="https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/logo.jpg" width="150" height="80">
+                    </a>
+                    {% endif %}
+                    <ul>
+                        {% if admin %}
+                        <li><a href="{% url 'adminentitylist' %}">List of Entity</a></li>
+                        <li><a href="{% url 'createadmin' %}">Create Admin</a></li>
+                        <li><a href="{% url 'adminmessenger' %}">Messenger</a></li>
+                        {% else %}
+                        <li><a href="{% url 'list' %}">List of Facility</a></li>
+                        <li><a href="{% url 'editac'  %}">Edit account detail</a></li>
+                        <li><a href="{% url 'support' %}">Help and Support</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+				</ul>
+				</nav>
+			</header>
+		</div>
+		
+		<!--Row 3-->
+		<div class="row">
+			<div style="height:100%;" class="row3">
+				<div class="entity">
+                    {% if admin %}
+                    <h1>Entity list</h1>
+                    {% else %}
+                    <h1>Facility list</h1>
+                    {% endif %}
+                    
 
-    {% if admin %}
-    <h1>Entity list</h1>
-    {% else %}
-	<h1>Facility list</h1>
-    {% endif %}
-    <br><br>
-    
-    <form action=
-    {% if admin %}
-    '{% url 'adminsearch' %}'
-    {% else %}
-    '{% url 'search' %}'
-    {% endif %}
-     method="POST">
-        
-        {% csrf_token %}
-        <input type='text' name='search_input' value=''><br>
-        
-            
-            Sort by:<br>
-        <input type="radio" name="sort" value="name"> Name <br>
-        <input type="radio" name="sort" value="positive_review"> Most Positive review<br>
-        <input type="radio" name="sort" value="negative_review"> Most Negative review <br>
-        <input type="radio" name="sort" value="comment"> Most comments <br>
-            
-        <input type='submit' name='search' value='search'><br>
-        <br>
-    </form>
-    
-    <ol>
-    {% for entity in entity_list %}
-    {% if admin %}
-    <li><a href='{% url 'editentity' entity.id %}'>{{ entity.name }}</a>
-    {% else %}
-    <li><a href='{% url 'detail' entity.id %}'>{{ entity.name }}</a>
-    {% endif %}
-    {% endfor %}
-    </ol>
-    {% if not entity_list %}
-    No result found
-    {% endif %}
-    <br><br>
-    
-    {% if search %}
-    {% if admin %}
-    <a href='{% url 'adminentitylist' %}'>Back to full list</a>
-    {% else %}
-    <a href='{% url 'list' %}'>Back to full list</a>
-    {% endif %}
-    {% endif %}
-    <br><br>
-    
-    {% if admin %}
-    <br><a href='{% url 'editentity' 0 %}'>Create Entity</a><br>
-    <a href='{% url 'adminhome' %}'>back to home</a>
-    {% else %}
-    <a href='{% url 'userhome' %}'>back to home</a>
-    {% endif %}
-    <br>
+                    <form action={% if admin %}
+                          '{% url 'adminsearch' %}'
+                          {% else %}
+                          '{% url 'search' %}'
+                          {% endif %}
+                          method="POST">
 
- </div>
-</center>   
+                        {% csrf_token %}
+                        <input type='text' name='search_input' value=''><br>
+
+
+                        Sort by:<br>
+                        <input type="radio" name="sort" value="name"> Name <br>
+                        <input type="radio" name="sort" value="positive_review"> Most Positive review<br>
+                        <input type="radio" name="sort" value="negative_review"> Most Negative review <br>
+                        <input type="radio" name="sort" value="comment"> Most comments <br>
+
+                        <input type='submit' name='search' value='search'><br>
+                        <br>
+                    </form>
+
+                    <ol>
+                        {% for entity in entity_list %}
+                        {% if admin %}
+                        <li>
+                            <a href='{% url 'editentity' entity.id %}'><font color="white">{{ entity.name }}</font></a>
+                        {% else %}
+                        <li>
+                            <a href='{% url 'detail' entity.id %}'><font color="white">{{ entity.name }}</font></a>
+                        {% endif %}
+                        {% endfor %}
+                    </ol>
+                    {% if not entity_list %}
+                    No result found
+                    {% endif %}
+                    <br><br>
+
+                    {% if search %}
+                    {% if admin %}
+                    <a href='{% url 'adminentitylist' %}'><font color="white">Back to full list</font></a>
+                    {% else %}
+                    <a href='{% url 'list' %}'><font color="white">Back to full list</font></a>
+                    {% endif %}
+                    {% endif %}
+                    <br><br>
+
+                </divstyle="height:100%;>
+			</div>
+		</div>
+		
+		<!--Row 4-->
+		<div class="row">
+		<div class="row4">
+            {% if admin %}
+			<!--Colum1-->
+			<div class="six left">
+				<div class= "link-container">
+					<a href='{% url 'editentity' 0 %}' class="button3">Create Entity</a>
+					<div class="img2">
+						<img src = "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/plus.png" alt="plus icon" width="250" height= "250"/>
+					</div>
+				</div>
+				
+			</div>
+            {% endif %}
+			
+            <!--Colum2-->
+            {% if admin %}
+            <div class="six right">
+                <div class= "link-container">
+                <a href="{% url 'adminhome' %}" class="button4">Back to home</a>
+            {% else %}
+            <div class="six middle">
+                <div class= "link-container">
+                <a href="{% url 'userhome' %}" class="button4">Back to home</a>
+            {% endif %}
+					<div class="img1">
+						<img src = "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/home.png" alt="home icon" width="150" height= "150"/>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		</div>
+		
+		<div class="row">
+		<div class="space">
+		
+		</div>
+		</div>
+		
+	
+		<!--Row 5-->
+		<div class="row">
+		<div class="last">
+		</div>
+		</div>
+		
+	</div>
+</body>
 </html>

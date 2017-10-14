@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width = device-width, initial-scale = 1">
-<title>Detail</title>
+<title>Search Result</title>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
 <style>
@@ -69,10 +69,10 @@
     }
 
     .row3{
+        height: 333px;
         color: #383838;
         font-family: 'Amatic SC', cursive;
-    font-size: 20px;
-    padding-bottom: 30px;
+        font-size: 20px;
     }
 
     .row4 .six{
@@ -93,11 +93,7 @@
     }
 
     .row4 .left{
-            background: url("https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/6.jpg") no-repeat center center ;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+
     }
 
     .row4 .right{
@@ -126,7 +122,7 @@
 
     .row3{
         background-color:#383838;
-        opacity: 0.6;
+        opacity: 0.3;
         filter: alpha(opacity=30);
     }
 
@@ -182,11 +178,17 @@
 		<!--Row 1-->
 		<div class="row">
 			<header>
-				<nav>
+                <nav>
+                    {% if admin %}
+                   <a href="{% url 'adminhome' %}">
+				<img src= "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/logo.jpg" width="150" height= "80">
+                   </a>
+                    {% else %}
                     <a href="{% url 'userhome' %}">
                         <img src="https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/logo.jpg" width="150" height="80">
                     </a>
-                    <ul>
+                    {% endif %}
+                       <ul>
                         {% if admin %}
                         <li><a href="{% url 'adminentitylist' %}">List of Entity</a></li>
                         <li><a href="{% url 'createadmin' %}">Create Admin</a></li>
@@ -206,42 +208,40 @@
 		<div class="row">
 			<div style="height:100%;" class="row3">
 				<div class="entity">
-                    <h1> {{ entity.name }}</h1>
-                    <p>
-                        {{ entity.description }}<br><br>
-
-                        <img src="{{ entity.photolink }}"><br>
-
-                        Address: {{ entity.address }}<br><br>
-
-                        Offical Link: <a href="{{ entity.officallink }}"> <font color="white">{{ entity.officallink }}</font> </a>
-                    </p>
-
-                    <form action='{% url 'review' entity.id %}' method="POST">
-                        {% csrf_token %}
-
-                        <b>How do you feel about {{ entity.name }} ?</b><br>
-                        <input type="radio" name="review" value="Good"> Good<br>
-                        <input type="radio" name="review" value="Bad"> Bad <br>
-
-                        <br>Leave your thoughts:<br>
-                        <textarea row='10' cols="100" name="commentbox" id="commentbox"></textarea>
-                        <br>
-
-                        <input type='submit' name='Submit' value='Submit'><br>
-                    </form>
-
+                    {% if admin %}
+                    <h1>Entity list</h1>
+                    {% else %}
+                    <h1>Facility list</h1>
+                    {% endif %}
                     <br><br>
-                    See what people say about {{ entity.name }}:<br>
 
-                    <textarea rows=20 cols=100 disabled>
-        Comments:
-        ----------------------------------------
-        {% for comment in comments %}
-        {{ comment.comment }}
-        ----------------------------------------
-        {% endfor %}
-    </textarea>
+                    {% if admin %}
+                    <form action='{% url 'adminsearch' %}' method="POST">
+                        {% else %}
+                        <form action='{% url 'search' %}' method="POST">
+                            {% endif %}
+
+                            {% csrf_token %}
+                            <input type='text' name='search_input' value=''>
+
+                            <input type='submit' name='search' value='search'><br>
+                        </form>
+
+                        <ol>
+                            {% for entity in entity_list %}
+                            {% if admin %}
+                            <li>
+                                <a href='{% url 'editentity' entity.id %}'>{{ entity.name }}</a>
+                                {% else %}
+                            <li>
+                                <a href='{% url 'detail' entity.id %}'>{{ entity.name }}</a>
+                                {% endif %}
+                                {% endfor %}
+                                {% if entity_list == NULL %}
+                                no result found
+                                {% endif %}
+                        </ol>
+                        <br><br>
 
                 </divstyle="height:100%;>
 			</div>
@@ -254,18 +254,13 @@
 			<!--Colum1-->
 			<div class="six left">
 				<div class= "link-container">
-					<a href='{% url 'adminentitylist' %}' class="button3">Back to List</a>
+					<a href='{% url 'editentity' %}' class="button3">Create Entity</a>
+					<div class="img2">
+						<img src = "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/plus.jpg" alt="plus icon" width="250" height= "250"/>
+					</div>
 				</div>
 				
-            </div>
-            {% else %}
-            <!--Colum1-->
-            <div class="six left">
-                <div class="link-container">
-                    <a href='{% url 'list' %}' class="button3"><font color="white">Back to List</font></a>
-                </div>
-
-            </div>
+			</div>
             {% endif %}
 			
             <!--Colum2-->

@@ -10,7 +10,7 @@ from django.http import HttpResponseRedirect
 
 def list(request):
     user_ver(request, False)
-    context = {'entity_list': Entity.objects.all(), 'admin': False }
+    context = {'entity_list': Entity.objects.all(), 'admin': False}
     return render(request, 'entity/list.html', context)
 
 def detail(request, entity_id):
@@ -36,11 +36,12 @@ def search(request):
 
     if sort == 'none':
          entity_list = Entity.objects.filter(name__icontains = input)
-    if sort == 'name': #ascending
-        entity_list = Entity.objects.filter(name__icontains = input).order_by(sort)
-    else : #descending
-        sort = '-' + sort
-        entity_list = Entity.objects.filter(name__icontains = input).order_by(sort)
+    else:
+        if sort == 'name': #ascending
+            entity_list = Entity.objects.filter(name__icontains = input).order_by(sort)
+        else : #descending
+            sort = '-' + sort
+            entity_list = Entity.objects.filter(name__icontains = input).order_by(sort)
     
     context = {'entity_list': entity_list, 'admin': False, 'search': True}
     return render(request, 'entity/list.html', context)

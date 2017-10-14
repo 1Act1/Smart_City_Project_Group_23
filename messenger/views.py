@@ -63,16 +63,17 @@ def admin_messenger(request):
 def conversation(request, receiver_id):
     user_ver(request, False, True)
     x = []
+    count = 0
     admin_id = request.session['user_id']
     messages = Message.objects.order_by('deliver_date', 'deliver_time').all()
     for each in messages:
         if ((int(each.receiverid) == int(receiver_id)) and (int(each.senderid) == int(admin_id))):
             x.append(each)
+            count += 1
         if ((int(each.receiverid) == int(admin_id)) and (int(each.senderid) == int(receiver_id))):
             x.append(each)
-        #if (not (((each.receiverid == receiver_id) and (each.senderid == admin_id))or ((each.receiverid == admin_id) and (each.senderid == receiver_id)))):
-    
-    #messages.exclude(id = each.id)
+            count += 1
+
     if not x:
         raise Http404("Invalid request");
 
@@ -80,7 +81,7 @@ def conversation(request, receiver_id):
         admin = True
     else:
         admin = False
-    context = {'messages': x, 'account_list': Account.objects.all(), 'receiver_id': int(receiver_id), 'admin': admin}
+    context = {'messages': x, 'account_list': Account.objects.all(), 'receiver_id': int(receiver_id), 'admin': admin, 'count': count}
     return render(request, 'messenger/conversation.html', context)
 
 def add_message(request, receiver_id):

@@ -2,7 +2,12 @@
 <html>
 <head>
 <meta name="viewport" content="width = device-width, initial-scale = 1">
-<title>Conversation</title>
+    <title>Conversation with
+        {% for account in account_list %}
+        {% if account.id == receiver_id %}
+        {{account.username}}
+        {% endif %}
+        {% endfor %}</title>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
 <style>
@@ -69,7 +74,7 @@
     }
 
     .row3{
-        height: 333px;
+        height: ({{count}}*120)px;
         color: #383838;
         font-family: 'Amatic SC', cursive;
         font-size: 20px;
@@ -194,10 +199,10 @@
 		<div class="row">
 			<header>
 				<nav>
-				<img src= "logo.png" width="150" height= "80">
+				<img src= "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/logo.jpg" width="150" height= "80">
                     <ul>
                     {% if admin %}
-					<li><a href="{% url 'list' %}">List of Entity</a></li>
+                    <li><a href="{% url 'adminentitylist' %}">List of Entity</a></li>
 					<li><a href="{% url 'createadmin' %}">Create Admin</a></li>
 					<li><a href="{% url 'adminmessenger' %}">Messenger</a></li>
                     {% else %}
@@ -219,12 +224,12 @@
                     <h1>Chat</h1>
                 </div>
                 <div class="welcome2">
-                    <small> Conversation with
+                     Conversation with
     {% for account in account_list %}
     {% if account.id == receiver_id %}
     {{account.username}}
     {% endif %}
-    {% endfor %}</small>
+    {% endfor %}
                 </div>
 			</div>
 		</div>
@@ -249,7 +254,7 @@
                         {% endfor %}
                     </div>
                     <br>
-                    <form action='{% url ' add_message' receiver_id %}' method="POST">
+                    <form action='{% url 'add_message' receiver_id %}' method="POST">
 
                         {% csrf_token %}
 
@@ -277,7 +282,7 @@
                     {% endif %}
                     ' class="button3">Back to my Message</a>
 					<div class="img2">
-						<img src = "w.png" alt="message icon" width="150" height= "150"/>
+						<img src = "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/w.jpg" alt="message icon" width="150" height= "150"/>
 					</div>
 				</div>
 				
@@ -295,7 +300,7 @@
                         {% endif %}
                         " class="button4">Back to home</a>
 					<div class="img1">
-						<img src = "home.png" alt="home icon" width="150" height= "150"/>
+						<img src = "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/home.png" alt="home icon" width="150" height= "150"/>
 					</div>
 				</div>
 			</div>
