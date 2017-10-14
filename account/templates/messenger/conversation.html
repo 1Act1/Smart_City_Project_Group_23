@@ -1,70 +1,321 @@
 <!DOCTYPE html>
 <html>
+<head>
+<meta name="viewport" content="width = device-width, initial-scale = 1">
+<title>Conversation</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
 <style>
-header, footer {
-    width: 100%;
-    height: 35px ;
-    color: white;
-    padding: 1px;
-    background-color: green;
-    
-}
-div {
-    background-color: #e6e6e6;
-    
-}
+    <!-- -->
+
+    <!--Header-->
+    *{
+        margin: 0;
+        padding: 0;
+    }
+
+    nav{
+        width: 100%;
+        height: 80px;
+        background-color: #383838;
+        line-height: 60px;
+    }
+
+    nav ul{
+        float: right;
+        margin-right: 20px;
+    }
+
+    nav ul li{
+        list-style-type: none;
+        display: inline-block;
+        transition: 0.8s all;
+    }
+
+    nav ul li:hover{
+        background-color: #808080;
+    }
+
+    nav ul li a{
+        text-decoration: none;
+        color: #fff;
+        padding: 10px;
+        font-family: 'Amatic SC', cursive;
+
+    }
+
+    <!--Grid -->
+    .container {
+        width: 100%; /*Set the width of the entire website here */
+        margin-right: auto;
+        margin-left: auto; /* Margin-left and right are set to auto to center the container */
+    }
+    .six:first-child {
+        margin-left: 0; /* This line of code makes the left-most column align to the left of the screen */
+    }
+
+    .six {
+        width: 49%; /* This div spans six columns (the entire row)*/
+        float: left;
+        margin-left: 2%;
+    }
+
+
+    .row {
+        width: 100%;
+        clear: both; /* Clear creates new styles for the next row */
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .row3{
+        height: 333px;
+        color: #383838;
+        font-family: 'Amatic SC', cursive;
+        font-size: 20px;
+    }
+
+    .row4 .six{
+        height: 333px;
+
+    }
+
+    header{
+        height: 60px;
+        background-color: #383838;
+    }
+
+    .bigImg{
+        height: 80px;
+        background-color:#fff;
+        padding-left: 30px;
+        display: inline-block;
+    }
+
+    .bigImg:hover {
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+    }
+
+
+
+    .row4 .left{
+
+    }
+
+    .row4 .right{
+
+    }
+
+
+    .row4 .left:hover {
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+    }
+
+    .row4 .right:hover {
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+    }
+
+    .last{
+        height: 40px;
+        background-color: #383838;
+    }
+
+    .space{
+        height: 30px;
+    }
+
+    .row3{
+        background-color:#383838;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+    }
+
+    .row4{
+        padding-top: 30px;
+        opacity: 0.6;
+        filter: alpha(opacity=60);
+    }
+
+
+    .button1, .button2{
+        color: #383838;
+        font-family: 'Amatic SC', cursive;
+        font-size: 40px;
+
+    }
+
+    .button4, .button3{
+        color: #383838;
+        font-family: 'Amatic SC', cursive;
+        font-size: 40px;
+    }
+
+    .link-container {
+        text-align: center;
+    }
+
+
+    .welcome1{
+        color: #383838;
+        font-family: 'Amatic SC', cursive;
+        font-size: 35px;
+        text-decoration: underline;
+    }
+
+    .welcome2{
+        color: #383838;
+        font-family: 'Amatic SC', cursive;
+    }
+
+    .img1, .img2{
+        padding-top: 50px;
+    }
+
+    .username{
+        color: #fff;
+        font-family: 'Amatic SC', cursive;
+        font-size: 25px;
+        padding-left:30px;
+        }
+
+    .chat{
+        color: #fff;
+    }
+
+
 </style>
+</head>
 <body>
-<header>
-<table  width='100%'>
-<tr>
-<td width='20px'>
-<img src="../../static/LOGO.png" alt="logo" style="width:30px;height:30px;">
-</td>
-<td>
- Conversation with
+	<div class="container">
+		<!--Row 1-->
+		<div class="row">
+			<header>
+				<nav>
+				<img src= "logo.png" width="150" height= "80">
+                    <ul>
+                    {% if admin %}
+					<li><a href="{% url 'list' %}">List of Entity</a></li>
+					<li><a href="{% url 'createadmin' %}">Create Admin</a></li>
+					<li><a href="{% url 'adminmessenger' %}">Messenger</a></li>
+                    {% else %}
+                    <li><a href="{% url 'list' %}">List of Facility</a></li>
+                    <li><a href="{% url 'editac' %}">Edit account detail</a></li>
+                    <li><a href="{% url 'support' %}">Help and Support</a></li>
+                    {% endif %}
+                    
+					<li><a href="{% url 'logout' %}">Logout</a></li>
+				</ul>
+				</nav>
+			</header>
+		</div>
+		
+		<!--Row 2-->
+		<div class="row">
+			<div class="bigImg">
+				<div class="welcome1">
+                    <h1>Chat</h1>
+                </div>
+                <div class="welcome2">
+                    <small> Conversation with
     {% for account in account_list %}
     {% if account.id == receiver_id %}
     {{account.username}}
     {% endif %}
-    {% endfor %}
-</td>
-<tr>
-</table>
-</header>
-<div>
-<h1>{{receiver_username}}</h1>
+    {% endfor %}</small>
+                </div>
+			</div>
+		</div>
+		
+		<!--Row 3-->
+		<div class="row">
+			<div class="row3">
+				<div class="chat">
+                    <h1>{{receiver_username}}</h1>
 
 
-<div class="chip">
-{% for each in messages %}
+                    <div class="chip">
+                        {% for each in messages %}
 
-    {% for account in account_list %}
-        {% if account.id == each.senderid %}
-            {{account.username}} : {{each.message}}
-                <br><br>
-        {% endif %}
-    {% endfor %}
+                        {% for account in account_list %}
+                        {% if account.id == each.senderid %}
+                        {{account.username}} : {{each.message}}
+                        <br><br>
+                        {% endif %}
+                        {% endfor %}
 
-{% endfor %}
-</div>
-<br>
-<form action='{% url 'add_message' receiver_id %}' method="POST">
-    
-    {% csrf_token %}
-    
-    <textarea row = '10' cols = "100" name = "conversationbox" id = "conversationbox"></textarea>
-    <br>
-    
-    <input type='submit' name='send' value='send'><br>
-</form>
+                        {% endfor %}
+                    </div>
+                    <br>
+                    <form action='{% url ' add_message' receiver_id %}' method="POST">
 
-{% if admin %}
-<br><a href='{% url 'adminmessenger' %}'>Back to Messenger</a><br>
-<br><a href='{% url 'adminhome' %}'>Back to home</a><br>
-{% else %}
-<br><a href='{% url 'usermessenger' %}'>Back to Messenger</a><br>
-<br><a href='{% url 'userhome' %}'>Back to home</a><br><div>
-{% endif %}
+                        {% csrf_token %}
+
+                        <textarea row='10' cols="100" name="conversationbox" id="conversationbox"></textarea>
+                        <br>
+
+                        <input type='submit' name='send' value='send'><br>
+                    </form>
+				</div>
+				
+			</div>
+		</div>
+		
+		<!--Row 4-->
+		<div class="row">
+		<div class="row4">
+			<!--Colum1-->
+			<div class="six left">
+				<div class= "link-container">
+                    <a href= '
+                    {% if admin %}
+                    {% url 'adminmessenger' %}
+                    {% else %}
+                    {% url 'usermessenger' %}
+                    {% endif %}
+                    ' class="button3">Back to my Message</a>
+					<div class="img2">
+						<img src = "w.png" alt="message icon" width="150" height= "150"/>
+					</div>
+				</div>
+				
+			</div>
+			
+			<!--Colum2-->
+			<div class="six right">
+				<div class= "link-container">
+                    
+                    <a href="
+                        {% if admin %}
+                        {% url 'adminhome' %}
+                        {% else %}
+                        {% url 'userhome' %}
+                        {% endif %}
+                        " class="button4">Back to home</a>
+					<div class="img1">
+						<img src = "home.png" alt="home icon" width="150" height= "150"/>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		</div>
+		
+		<div class="row">
+		<div class="space">
+		
+		</div>
+		</div>
+		
+	
+		<!--Row 5-->
+		<div class="row">
+		<div class="last">
+		</div>
+		</div>
+		
+	</div>
 </body>
 </html>

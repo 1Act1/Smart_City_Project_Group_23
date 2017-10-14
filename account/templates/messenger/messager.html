@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width = device-width, initial-scale = 1">
-<title>Grid</title>
+<title>Messenger</title>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
 <style>
@@ -68,10 +68,11 @@ nav ul li a{
 	margin: 0px;
 }
 
-.row3 .six{
+.row3{
 	height: 333px;
-
-	
+	color: #383838;
+	font-family: 'Amatic SC', cursive;
+	font-size: 20px;	
 }
 
 .row4 .six{
@@ -85,26 +86,10 @@ header{
 }
 
 .bigImg{
-	height: 310px;
+	height: 80px;
 	background-color:#fff;
-	text-align: center;
-}
-
-.bigImg:hover {
-    opacity: 0.8;
-    filter: alpha(opacity=80); 
-}
-
-.row3 .left{
-	background: url("6.jpg") ;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-}
-
-.row3 .right{
-	
+    text-align: center;
+    padding-bottom: 20px;
 }
 
 .row4 .left{
@@ -112,22 +97,9 @@ header{
 }
 
 .row4 .right{
-	background: url("2.jpg") no-repeat center center ;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
+
 }
 
-.row3 .left:hover {
-    opacity: 0.8;
-    filter: alpha(opacity=80); 
-}
-
-.row3 .right:hover {
-    opacity: 0.8;
-    filter: alpha(opacity=80); 
-}
 
 .row4 .left:hover {
     opacity: 0.8;
@@ -148,30 +120,27 @@ header{
 	height: 30px;	
 }
 
-.row3, .row4{
+.row3{
+	background-color:#383838;
+	opacity: 0.3;
+    filter: alpha(opacity=30);
+}
+
+.row4{
 	padding-top: 30px;
 	opacity: 0.6;
     filter: alpha(opacity=60);
 }
 
-.welcome{
 
+.button1, .button2{
 	color: #383838;
-	padding-top: 10px;
-	padding-left: 50px;
-	font-family: 'Amatic SC', cursive;
-	font-size: 40px;
-	
-}
-
-.button1, .button4{
-	color: #fff;
 	font-family: 'Amatic SC', cursive;
 	font-size: 40px;
 
 }
 
-.button2, .button3{
+.button4, .button3{
 	color: #383838;
 	font-family: 'Amatic SC', cursive;
 	font-size: 40px;
@@ -185,14 +154,21 @@ header{
 .welcome1{
 	color: #383838;
 	font-family: 'Amatic SC', cursive;
-	font-size: 20px;
+	font-size: 35px;
 	text-decoration: underline;
 }
 
-.img1, .img2{
+.img1{
 	padding-top: 50px;
 }
 
+.username{
+	color: #fff;
+	font-family: 'Amatic SC', cursive;
+	font-size: 25px;
+	text-decoration: underline;
+	padding-left:50px;
+}
 
 </style>
 </head>
@@ -203,11 +179,17 @@ header{
 			<header>
 				<nav>
 				<img src= "logo.png" width="150" height= "80">
-				<ul>
-					<li><a href='{%url'adminentitylist'%}'>List of Entity</a></li>
-					<li><a href='{%url'createadmin'%}'>Create Admin</a></li>
-					<li><a href='{%url'adminmessenger'%}'>Messenger</a></li>
-					<li><a href='{%url'logout'%}'>Logout</a></li>
+                    <ul>
+                        {% if admin %}
+                        <li><a href="{% url 'list' %}">List of Entity</a></li>
+                        <li><a href="{% url 'createadmin' %}">Create Admin</a></li>
+                        <li><a href="{% url 'adminmessenger' %}">Messenger</a></li>
+                        {% else %}
+                        <li><a href="{% url 'list' %}">List of Facility</a></li>
+                        <li><a href="{% url 'editac' %}">Edit account detail</a></li>
+                        <li><a href="{% url 'support' %}">Help and Support</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
 				</ul>
 				</nav>
 			</header>
@@ -216,55 +198,69 @@ header{
 		<!--Row 2-->
 		<div class="row">
 			<div class="bigImg">
-				<div class="welcome">
-					<h1>Welcome Back, Admin!</h1>
-				</div>
 				<div class="welcome1">
-					<h2>Shortcuts</h2>
+					<h1>Messages</h1>
 				</div>
 			</div>
 		</div>
 		
 		<!--Row 3-->
 		<div class="row">
-		<div class="row3">
-			<!--Colum1-->
-			<div class="six left">
-				<div class= "link-container">
-					<a href='{%url'adminentitylist'%}' class="button1">List of Entities</a>
-				</div>
+			<div class="row3">
+				<div class="username">
+                    {% for each in conversation_list %}
+
+
+                    {% for account in account_list %}
+                    {% if account.id == each  %}
+                    <li>
+                        Conversation with:
+                        <a href=
+                           {%if admin%} 
+                           '{% url ' adminconversation'
+                           {%else  %}
+                           '{% url ' userconversation'
+                           {%endif%}
+                           account.id %}'>
+                            {{account.username}}
+                        </a>
+
+                        {% endif %}
+                        {% endfor %}
+                        {% endfor %}
+                </div>
 			</div>
-			
-			<!--Colum2-->
-			<div class="six right">	
-				<div class= "link-container">
-					<a href='{%url'createadmin'%}' class="button2">Make a new Admin</a>
-					<div class="img1">
-						<img src = "c.jpg" alt="create icon" width="150" height= "150"/>
-					</div>
-				</div>
-			</div>
-		</div>
 		</div>
 		
 		<!--Row 4-->
 		<div class="row">
 		<div class="row4">
+            {% if admin %}
 			<!--Colum1-->
 			<div class="six left">
 				<div class= "link-container">
-					<a href='{%url'adminmessenger'%}' class="button3">Messages</a>
+					<a href='{% url 'startnewconversation' %}' class="button3">Start New Conversation</a>
 					<div class="img2">
-						<img src = "w.png" alt="message icon" width="150" height= "150"/>
+						<img src = "chat.jpg" alt="chat icon" width="250" height= "250"/>
 					</div>
 				</div>
 				
 			</div>
+            {% endif %}
 			
-			<!--Colum2-->
-			<div class="six right">
-				<div class= "link-container">
-					<a href='{%url'logout'%}' class="button4">Logout</a>
+            <!--Colum2-->
+            {% if admin %}
+            <div class="six right">
+                <div class= "link-container">
+                <a href="{% url 'adminhome' %}" class="button4">Back to home</a>
+            {% else %}
+            <div class="six middle">
+                <div class= "link-container">
+                <a href="{% url 'userhome' %}" class="button4">Back to home</a>
+            {% endif %}
+					<div class="img1">
+						<img src = "home.png" alt="home icon" width="150" height= "150"/>
+					</div>
 				</div>
 			</div>
 			

@@ -1,0 +1,70 @@
+<html>
+    <h1>Wellcome, {{username}}</h1><br><br>
+    
+    <a href='{% url 'list' %}'>Facility list</a><br><br>
+    
+    
+    <p id="demo">Click the button below to enable location service and navigate with map</p>
+    
+    <button onclick="getLocation()">Click Me</button>
+    
+    <div id="mapholder"></div>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4ogDPunQYQaP8QPXWaqDXwrhURyg3Hbw&callback=initMap"
+        type="text/javascript"></script>
+    
+    <script>
+        var x = document.getElementById("demo");
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+    
+    function showPosition(position) {
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
+        var latlon = new google.maps.LatLng(lat, lon)
+        var mapholder = document.getElementById('mapholder')
+        mapholder.style.height = '250px';
+        mapholder.style.width = '500px';
+        
+        var myOptions = {
+            center:latlon,zoom:14,
+            mapTypeId:google.maps.MapTypeId.ROADMAP,
+            mapTypeControl:false,
+            navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
+        }
+        
+        var map = new google.maps.Map(document.getElementById("mapholder"), myOptions);
+        var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
+    }
+    
+    function showError(error) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation."
+            break;
+            case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable."
+            break;
+            case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out."
+            break;
+            case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred."
+            break;
+        }
+    }
+    </script>
+    
+    
+    
+    <p><a href='{% url 'support' %}'>Need some help?</a></p>
+    <p><a href='{% url 'editac' %}'>Edit account detail</a></p>
+    
+    <a href='{% url 'logout' %}'>Logout</a><br>
+    
+</html>

@@ -1,82 +1,269 @@
+<!DOCTYPE html>
 <html>
+<head>
+<meta name="viewport" content="width = device-width, initial-scale = 1">
+<title>Create New Chat</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+<style>
+    <!-- -->
 
-<title> New Chat </title>
-<style> 
-input[type=text] {
-    width: 130px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: white;
-    background-image: url.('searchicon.png');
-    background-position: 10px 10px; 
-    background-repeat: no-repeat;
-    padding: 12px 20px 12px 40px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
-}
-input[type=text]:focus {
-    width: 100%;
-}
-.chip {
-    display: inline-block;
-    padding: 0 25px;
-    height: 50px;
-    font-size: 16px;
-    line-height: 50px;
-    border-radius: 25px;
-    background-color: #f1f1f1;
-}
-.chip img {
-    float: left;
-    margin: 0 10px 0 -25px;
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-}
-header, footer {
-    width: 100%;
-    height: 35px ;
-    color: white;
-    padding: 1px;
-    background-color: green;
-    
-}
+    <!--Header-->
+    *{
+        margin: 0;
+        padding: 0;
+    }
+
+    nav{
+        width: 100%;
+        height: 80px;
+        background-color: #383838;
+        line-height: 60px;
+    }
+
+    nav ul{
+        float: right;
+        margin-right: 20px;
+    }
+
+    nav ul li{
+        list-style-type: none;
+        display: inline-block;
+        transition: 0.8s all;
+    }
+
+    nav ul li:hover{
+        background-color: #808080;
+    }
+
+    nav ul li a{
+        text-decoration: none;
+        color: #fff;
+        padding: 10px;
+        font-family: 'Amatic SC', cursive;
+
+    }
+
+    <!--Grid -->
+    .container {
+        width: 100%; /*Set the width of the entire website here */
+        margin-right: auto;
+        margin-left: auto; /* Margin-left and right are set to auto to center the container */
+    }
+    .three:first-child, .six:first-child {
+        margin-left: 0; /* This line of code makes the left-most column align to the left of the screen */
+    }
+
+    .six {
+        width: 49%; /* This div spans six columns (the entire row)*/
+        float: left;
+        margin-left: 2%;
+    }
+
+
+    .row {
+        width: 100%;
+        clear: both; /* Clear creates new styles for the next row */
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .three {
+        width: 23.5%;
+        float:left;
+        margin-left: 2%;
+    }
+
+    .row4 .six, .row4 .three{
+        height: 333px;
+
+    }
+
+    .row3{
+        height: 333px;
+        color: #383838;
+        font-family: 'Amatic SC', cursive;
+        font-size: 20px;
+    }
+
+    header{
+        height: 60px;
+        background-color: #383838;
+    }
+
+    .bigImg{
+        height: 80px;
+        background-color:#fff;
+        padding-left:30px;
+    }
+
+    .row4 .left{
+
+    }
+    .row4 .middle{
+
+
+    }
+    .row4 .right{
+
+    }
+
+    .row4 :hover {
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+    }
+
+
+    .last{
+        height: 40px;
+        background-color: #383838;
+    }
+
+    .space{
+        height: 30px;
+    }
+
+    .row3{
+        background-color:#383838;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        text-align: center;
+    }
+
+    .row4{
+        padding-top:30px;
+
+    }
+
+
+    .button4, .button3{
+        color: #383838;
+        font-family: 'Amatic SC', cursive;
+        font-size: 40px;
+    }
+
+    .link-container {
+        text-align: center;
+    }
+
+
+    .welcome1{
+        color: #383838;
+        font-family: 'Amatic SC', cursive;
+        font-size: 35px;
+        text-decoration: underline;
+    }
+
+    .img1{
+        padding-top: 50px;
+    }
+
+    .chip {
+        display: inline-block;
+        padding: 0 25px;
+        height: 50px;
+        font-size: 16px;
+        line-height: 50px;
+         border-radius: 25px;
+            background-color: #f1f1f1;
+        }
+        .chip img {
+            float: left;
+            margin: 0 10px 0 -25px;
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+        }
+
+
 </style>
+</head>
 <body>
-<p> </p>
-<b>
-<header>
-<table  width='100%'>
-<tr>
-<td width='10px'>
-<img src="../../static/LOGO.png" alt="logo" style="width:30px;height:30px;">
-</td>
-<td>
- Create new chat
-</td>
-<tr>
-</table>
-</header>
-  
-</b>
-<fieldset>
-	<legend><b>Friend lists:</b></legend>
-  
-  {% for each in ac %}
-  {% if each != myac %}
-<div class="chip">
-  <img src="https://image.flaticon.com/icons/png/512/36/36601.png" alt="Person" width="96" height="96">
-      
-      <a href='{% url 'createconversation' each.id %}'>{{each.username}}</a>
-</div><br><br><br>{% endif %}
-{% endfor %}
+	<div class="container">
+		<!--Row 1-->
+		<div class="row">
+			<header>
+				<nav>
+				<img src= "logo.png" width="150" height= "80">
+				<ul>
+                    <li><a href="{% url 'list' %}">List of Entity</a></li>
+                    <li><a href="{% url 'createadmin' %}">Create Admin</a></li>
+                    <li><a href="{% url 'adminmessenger' %}">Messenger</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+				</ul>
+				</nav>
+			</header>
+		</div>
+		
+		<!--Row 2-->
+		<div class="row">
+			<div class="bigImg">
+				<div class="welcome1">
+					<h1>New Chat</h1>
+				</div>
+			</div>
+		</div>
+		
+		<!--Row 3-->
+		<div class="row">
+			<div class="row3">
 
-<br>
+                    <fieldset style="height: 310px;">
 
-</fieldset>
-<br />
-<br />
-    <br><a href='{% url 'adminhome' %}'>Back to home</a><br>
+
+                        {% for each in ac %}
+                        {% if each != myac %}
+                        <div class="chip">
+                            <img src="https://image.flaticon.com/icons/png/512/36/36601.png" alt="Person" width="96" height="96">
+
+                            <a href='{% url ' createconversation' each.id %}'>{{each.username}}</a>
+                        </div><br><br><br>{% endif %}
+                        {% endfor %}
+
+                        <br>
+
+                    </fieldset>
+				
+			</div>
+		</div>
+		
+		<!--Row 4-->
+		<div class="row">
+		<div class="row4">
+            <!--Colum1-->
+            <div class="six left">
+                <div class= "link-container">
+                    <a href= '{% url 'adminmessenger' %}' class="button3">Back to my Message</a>
+                    <div class="img2">
+                        <img src = "w.png" alt="message icon" width="150" height= "150"/>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!--Colum2-->
+			
+			<div class="six right">
+				<div class= "link-container">
+					<a href="{% url 'adminhome' %}" class="button4">Back to home</a>
+					<div class="img1">
+						<img src = "home.png" alt="home icon" width="150" height= "150"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="three right">	
+			</div>
+		</div>
+		</div>
+		
+
+		<!--Row 5-->
+		<div class="row">
+		<div class="last">
+		</div>
+		</div>
+		
+	</div>
 </body>
+</html>

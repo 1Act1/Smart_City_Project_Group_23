@@ -1,0 +1,132 @@
+<html>
+<head>
+<meta name="viewport" content="width = device-width, initial-scale = 1">
+<title>Header</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+<style>
+section {
+    width: 320px;
+    padding: 10px;
+    border: 5px solid gray;
+    margin: 0;
+	 font-family: 'Amatic SC', cursive
+}
+h3{
+font-family: 'Amatic SC', cursive
+}
+label{
+font-family: 'Amatic SC', cursive
+}
+form{
+font-family: 'Amatic SC', cursive
+}
+*{
+	margin: 0;
+	padding: 0;
+	font-family: verdana;
+}
+nav{
+	width: 100%;
+	height: 80px;
+	background-color: #383838;
+	line-height: 80px;
+}
+nav ul{
+	float: right;
+	margin-right: 20px;
+}
+nav ul li{
+	list-style-type: none;
+	display: inline-block; 
+	transition: 0.8s all;
+}
+nav ul li:hover{
+	background-color: #808080;
+}
+nav ul li a{
+	text-decoration: none;
+	color: #fff;
+	padding: 20px;
+	font-family: 'Amatic SC', cursive;
+}
+</style>
+</head>
+
+<div id="main">
+	<nav>
+	<img src= "logo.png" width="150" height= "80">
+		<ul>
+			 {% if admin %}
+                                <li><a href="{% url 'list' %}">List of Entity</a></li>
+                                <li><a href="{% url 'createadmin' %}">Create Admin</a></li>
+                                <li><a href="{% url 'adminmessenger' %}">Messenger</a></li>
+				<li><a href="{% url 'logout' %}">Logout</a></li>
+			 {% else %}
+			<li><a href='{% url 'login' %}'>cancel</a></li>
+	
+			{% endif %}
+                                
+		</ul>
+	</nav>
+</div>
+	
+<center>
+
+    <section>
+	<h3  style="font-size:160%;">Create account</h3><br><br>
+	<table>
+
+    {% if error_message %}
+    <br><br>
+    <p><strong>{{error_message}}</strong></p>
+    <br><br>
+    {% endif %}
+    
+    
+    {% if admin %}
+    <form action= '{% url 'createadminprocess' %}' method="POST">
+    {% endif %}
+    {% if not admin %}
+    <form action= '{% url 'createprocess' %}' method="POST">
+    {% endif %}
+    
+        {% csrf_token %}
+        
+        <label>Username:</label><br>
+        <input id="your_name" type="text" name="name" maxlength="100" required />
+        <br>
+        <label>Password:</label><br>
+        <input id="password" type="password" name="password" maxlength="100" required />
+        <br>
+        <label>Confirm Password:</label><br>
+        <input id="confirm_password" type="password" name="confirm_password" maxlength="100" required />
+        <br>
+        <label>Phone Number (not required):</label><br>
+        <input id="phone_number" type="tel" name="phone_number" maxlength="30" />
+        <br>
+        <label>Email (not required):</label><br>
+        <input id="email" type="text" name="email" maxlength="50" />
+        <br>
+        <label>Residentail Address (not required):</label><br>
+        <input id="address" type="text" name="address" maxlength="100" />
+        <br>
+        
+        {% if not admin %}
+        <label>Account Type (Choose one):</label><br>
+        <input type='radio' id='1' name='actype' value=1>
+        <label> Student </label><br>
+        <input type='radio' id='2' name='actype' value=2>
+        <label> Tourist </label><br>
+        <input type='radio' id='3' name='actype' value=3>
+        <label> Businessman </label><br>
+        {% endif %}
+        
+        <input type='submit' value='submit'>
+            
+    </form></table>
+	
+    </section>
+    </center>
+    
+</html>
