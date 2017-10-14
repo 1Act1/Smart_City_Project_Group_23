@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+                    
 <meta name="viewport" content="width = device-width, initial-scale = 1">
 <title>Grid</title>
 <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -207,8 +208,7 @@ header{
 		<div class="row">
 			<header>
 				<nav>
-                    {% load static %}
-				<img src="{% static "1.jpg" %}" width="150" height= "80">
+				<img src="Example.jpg" width="150" height= "80">
 				<ul>
                     <li><a href="{% url 'list' %}">List of Facility</a></li>
                     <li><a href="{% url 'editac' %}">Edit account detail</a></li>
