@@ -1,0 +1,112 @@
+<!Doctype html>
+<html>
+<head>
+<meta name="viewport" content="width = device-width, initial-scale = 1">
+<title>Header</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+<style>
+section{
+    width: 320px;
+    padding: 10px;
+    border: 5px solid gray;
+    margin: 0;
+    font-family: 'Amatic SC', cursive
+}
+h3{
+font-family: 'Amatic SC', cursive
+
+}
+form{
+font-family: 'Amatic SC', cursive
+}
+label{
+font-family: 'Amatic SC', cursive
+}
+*{
+	margin: 0;
+	padding: 0;
+	font-family: verdana;
+}
+nav{
+	width: 100%;
+	height: 80px;
+	background-color: #383838;
+	line-height: 80px;
+}
+nav ul{
+	float: right;
+	margin-right: 20px;
+}
+nav ul li{
+	list-style-type: none;
+	display: inline-block; 
+	transition: 0.8s all;
+}
+nav ul li:hover{
+	background-color: #808080;
+}
+nav ul li a{
+	text-decoration: none;
+	color: #fff;
+	padding: 10px;
+	font-family: 'Amatic SC', cursive;
+}
+</style>
+</head>
+<body>
+
+<div id="main">
+	<nav>
+	<img src= "logo.png" width="150" height= "80">
+		<ul>
+			<li><a href='{% url 'userhome' %}'>Back to home</a></li>
+			<li><a href="{% url 'list' %}">List of Facility</a></li>
+                    <li><a href="{% url 'editac' %}">Edit account detail</a></li>
+                    <li><a href="{% url 'support' %}">Help and Support</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+			
+		</ul>
+	</nav>
+</div>
+<center>
+<section >
+<h3  style="font-size:160%;">Edit your account details <h3><br>
+{% if message %}
+<br><br>
+<font color='red'><strong>{{message}}</strong></font>
+<br><br>
+{% endif %}
+
+<form action='{% url 'editacsave' %}' method="POST" >
+    {% csrf_token %}
+
+<h3> Username: </h3>
+<br>
+<input type="text" name="Username" value="{{ac.username}}"><br><br>
+
+<h3> Details:</h3>
+Physical Address: <br>
+<input type="text" name="address" value="{{ac.residential_address}}"><br><br>
+Contact Number: <br>
+<input type="text" name="contactnumber" value="{{ac.phone_number}}"><br><br>
+Email Address: <br>
+<input type="email" name="emailaddress" value="{{ac.email_address}}"><br><br>
+
+<h3> Password: </h3>
+Old Password:<br>
+<input type="password" name="old_password"><br><br>
+New Password:<br>
+<input type="password" name="new_password"><br><br>
+Confirm New Password: <br>
+<input type="password" name="confirm_password"><br><br>
+<input type="submit" value="Save Changes">
+<input type="reset"><br>
+</form>
+        
+        
+</section>
+</center>
+
+</body>
+</html>
