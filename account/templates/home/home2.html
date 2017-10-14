@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+                    
 <meta name="viewport" content="width = device-width, initial-scale = 1">
 <title>Grid</title>
 <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -90,7 +91,7 @@ header{
 
 .bigImg{
 	height: 510px;
-	background: url("https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/1.jpg") no-repeat center center;
+	background: url("1.jpg") no-repeat center center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -107,14 +108,14 @@ header{
 	background: #383838
 }
 .row3 .middle{
-	background: url("https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/6.jpg") no-repeat center center ;
+	background: url("6.jpg") no-repeat center center ;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 }
 .row3 .right{
-	background: url("") no-repeat center center ;
+	background: url("9.jpg") no-repeat center center ;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -207,13 +208,13 @@ header{
 		<div class="row">
 			<header>
 				<nav>
-				<img src= "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/logo.jpg" width="150" height= "80">
+				<img src="https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/logo.jpg" width="150" height= "80">
 				<ul>
-					<li><a href='{% url 'list' %}'>List of facility</a></li>
-					<li><a href='{% url 'editac' %}'>Edit account detail</a></li>
-					<li><a href='{% url 'support' %}'>Help and Support</a></li>
-					<li><a href='{% url 'logout' %}'>Logout</a></li>
-				</ul>
+                    <li><a href="{% url 'list' %}">List of Facility</a></li>
+                    <li><a href="{% url 'editac' %}">Edit account detail</a></li>
+                    <li><a href="{% url 'support' %}">Help and Support</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                </ul>
 				</nav>
 			</header>
 		</div>
@@ -222,7 +223,7 @@ header{
 		<div class="row">
 			<div class="bigImg">
 				<div class="welcome">
-					<h1>Welcome Back, {{ username }}!</h1>
+                    <h1>Welcome Back, {{}}</h1>
 				</div>
 			</div>
 		</div>
@@ -291,13 +292,13 @@ header{
 			<!--Colum2-->
 			<div class="three middle">
 				<div class= "link-container1">
-				<a href='{% url 'list' %}' class="button1">List of facility</a>
+				<a href="http://google.com" class="button1">List of facility</a>
 				</div>
 			</div>
 			
 			<!--Colum3-->
 			<div class="three right">	
-				<a href='{% url 'logout' %}' class="button2">Logout</a>
+				<a href="http://google.com" class="button2">Logout</a>
 			</div>
 		</div>
 		</div>
@@ -312,7 +313,7 @@ header{
 			<!--Colum2-->
 			<div class="six middle">
 				<div class= "link-container2">
-					<a href='{% url 'support' %}' class="button3">Need some help?</a>
+					<a href="http://google.com" class="button3">Need some help?</a>
 				</div>
 			</div>
 			
