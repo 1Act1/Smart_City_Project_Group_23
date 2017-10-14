@@ -1,32 +1,253 @@
+<!DOCTYPE html>
 <html>
-    <body>
-        
-    <h1>Need some help?</h1>
-    <a href="">Q&A</a>
-    <p> Click "Q&A" to find out some common problem that users will have</p>
-            
-    <xxxx action="/action_page.php">
-    <p>Cant'fix it? Just leave a message:
-            
-    <form action='{% url 'helpmessage' %}' method="POST">
-            
-    {% csrf_token %}
-            
-    <textarea row = '10' cols = "100" name = "help box" id = "help box"></textarea>
-    <br>
-            
-    <input type='submit' name='send' value='send'><br>
-    </form>
-    
-    <a href = '{% url 'usermessenger' %}'>View your previous conversation</a>
-            
-    {% if message %}
-    <br>
-    <p><strong>{{message}}</strong></p>
-    <br>
-    {% endif %}
-            
-<br><br><a href='{% url 'userhome' %}'>back to home</a><br>
-            
+<head>
+<meta name="viewport" content="width = device-width, initial-scale = 1">
+<title>Grid</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+<style>
+<!-- -->
+
+<!--Header-->
+*{
+	margin: 0;
+	padding: 0;
+}
+
+nav{
+	width: 100%;
+	height: 80px;
+	background-color: #383838;
+	line-height: 60px;
+}
+
+nav ul{
+	float: right;
+	margin-right: 20px;
+}
+
+nav ul li{
+	list-style-type: none;
+	display: inline-block; 
+	transition: 0.8s all;
+}
+
+nav ul li:hover{
+	background-color: #808080;
+}
+
+nav ul li a{
+	text-decoration: none;
+	color: #fff;
+	padding: 10px;
+	font-family: 'Amatic SC', cursive;
+
+}
+
+<!--Grid -->
+.container {
+	width: 100%; /*Set the width of the entire website here */
+	margin-right: auto;
+	margin-left: auto; /* Margin-left and right are set to auto to center the container */
+}
+.three:first-child, .six:first-child { 
+	margin-left: 0; /* This line of code makes the left-most column align to the left of the screen */
+}
+
+.six {
+	width: 49%; /* This div spans six columns (the entire row)*/
+	float: left;
+	margin-left: 2%;
+}
+
+.three {
+	width: 23.5%;
+	float:left;
+	margin-left: 2%;
+}
+
+.row {
+	width: 100%;
+	clear: both; /* Clear creates new styles for the next row */
+	padding: 0px;
+	margin: 0px;
+}
+
+.row3 .six, .row3 .three{
+	height: 333px;
+	
+}
+
+
+header{
+	height: 60px;
+	background-color: #383838;
+}
+
+.bigImg{
+	height: 450px;
+	background-color: #fff;
+	text-align: center;
+}
+
+.bigImg:hover {
+    opacity: 0.8;
+    filter: alpha(opacity=80); 
+}
+
+
+
+.last{
+	height: 40px;
+	background-color: #383838;
+}
+
+.space{
+	height: 30px;	
+}
+
+.row3{
+	height: auto;
+	background-color: #383838;
+	padding-bottom: 10px;
+}
+
+.support{
+	color: #383838;
+	padding-top: 30px;
+	font-family: 'Amatic SC', cursive;
+	font-size: 40px;
+}
+
+.support1{
+	color: #383838;
+	font-family: 'Amatic SC', cursive;
+	font-size: 10px;
+}
+
+.link-container1, .link-container2 {
+    text-align: center;
+}
+
+.button3{
+	color: #383838;
+	font-family: 'Amatic SC', cursive;
+	font-size: 40px;
+
+}
+
+.FAQ{
+	color: #fff;
+	font-family: 'Amatic SC', cursive;
+	font-size: 20px;
+}
+
+ul.listFAQ{
+	margin-right: 20px;
+}
+
+ul li{
+	list-style-type: none;
+	display: inline-block; 
+}
+
+ul li a{
+	text-decoration: none;
+	font-family: 'Amatic SC', cursive;
+	color: #fff;
+	padding: 10px;
+	font-size: 20px;
+}
+
+ul li:hover{
+	background-color: #808080;
+}
+
+</style>
+</head>
+<body>
+	<div class="container">
+		<!--Row 1-->
+		<div class="row">
+			<header>
+				<nav>
+				<img src= "logo.png" width="150" height= "80">
+				<ul>
+                    <li><a href="{% url 'list' %}">List of Facility</a></li>
+                    <li><a href="{% url 'editac' %}">Edit account detail</a></li>
+                    <li><a href="{% url 'support' %}">Help and Support</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+				</ul>
+				</nav>
+			</header>
+		</div>
+		
+		<!--Row 2-->
+		<div class="row">
+			<div class="bigImg">
+				<div class="support">
+					<h1>How can we help you? </h1>
+				</div>
+				<div class="support1">
+					<h2>Resources that will teach you everthing about SmartCity. </h2>
+				</div>
+                
+                <form action='{% url 'helpmessage' %}' method="POST">
+                    
+                    {% csrf_token %}
+                    
+                    <textarea row = '10' cols = "100" name = "help box" id = "help box"></textarea>
+                    <br>
+                    
+                    <input type='submit' name='send' value='send'><br>
+                </form>
+                <br><br>
+                <center>
+                <div class= "link-container">
+                <a href='{% url 'usermessenger' %}' class="button3">View Previous Conversation</a>
+                </div>
+                </center>
+                
+            </div>
+		</div>
+		
+		<!--Row 3-->
+		<div class="row">
+			<div class="row3">
+				<div class="FAQ">
+					<h1>Frequently asked questions</h1>
+				</div>
+				
+				<ul class="listFAQ">
+					<li><a href="#">List of facility</a></li>
+					<li><a href="#">Edit account detail</a></li>
+					<li><a href="#">Help and Support</a></li>
+					<li><a href="#">Logout</a></li>
+					<li><a href="#">List of facility</a></li>
+					<li><a href="#">Edit account detail</a></li>
+					<li><a href="#">Help and Support</a></li>
+					<li><a href="#">Logout</a></li>
+					<li><a href="#">List of facility</a></li>
+					<li><a href="#">Edit account detail</a></li>
+					<li><a href="#">Help and Support</a></li>
+					<li><a href="#">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<!--Extra-->
+		<div class="row">
+		<div class="space">
+		
+		</div>
+		</div>
+	
+		<!--Row 5-->
+		<div class="row">
+		<div class="last">
+		</div>
+		</div>
+		
+	</div>
 </body>
 </html>
