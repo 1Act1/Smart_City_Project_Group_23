@@ -214,7 +214,7 @@ header{
                     {% for account in account_list %}
                     {% if account.id == each  %}
                     <li>
-                        Conversation with:
+                        
                         <a href=
                            {%if admin%} 
                            '{% url 'adminconversation' account.id %}'>
@@ -222,6 +222,7 @@ header{
                            '{% url 'userconversation' account.id %}'>
                            {% endif %}
                            <font color="white">
+                               Conversation with:
                             {{account.username}}
                             </font>
                         </a>

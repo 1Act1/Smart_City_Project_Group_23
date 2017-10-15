@@ -130,6 +130,12 @@
         filter: alpha(opacity=30);
     }
 
+    .rowrec{
+        padding-top: 30px;
+        opacity: 1;
+        filter: alpha(opacity=60);
+    }
+
     .row4{
         padding-top: 30px;
         opacity: 0.6;
@@ -169,7 +175,7 @@
     .entity{
         color: #fff;
         font-family: 'Amatic SC', cursive;
-        font-size: 15px;
+        font-size: 20px;
         padding-left:50px;
         padding-top: 10px;
 
@@ -235,30 +241,45 @@
                     See what people say about {{ entity.name }}:<br>
 
                     <textarea rows=20 cols=100 disabled>
-        Comments:
-        ----------------------------------------
-        {% for comment in comments %}
-        {{ comment.comment }}
-        ----------------------------------------
-        {% endfor %}
-    </textarea>
-
+                        Comments:
+                        ----------------------------------------
+                        {% for comment in comments %}
+                        {{ comment.comment }}
+                        ----------------------------------------
+                        {% endfor %}
+                    </textarea>
                 </divstyle="height:100%;>
 			</div>
 		</div>
 		
-		<!--Row 4-->
-		<div class="row">
-		<div class="row4">
-            {% if admin %}
-			<!--Colum1-->
-			<div class="six left">
-				<div class= "link-container">
-					<a href='{% url 'adminentitylist' %}' class="button3">Back to List</a>
-				</div>
-				
+        <div class="six middle">
+            <div class= "button3">
+                Recommendations:
             </div>
-            {% else %}
+        </div>
+        
+        <!--Row 4-->
+        <div class="row">
+            <div class="rowrec">
+                {% for each in recommend_list %}
+                {% if each.id != entity.id %}
+                <div class="six middle">
+                    <div class= "link-container">
+                        <a href="{% url 'detail' each.id %}" class="button4">{{each.name}}
+                        <div class="img1">
+                            <img src = "{{each.photolink}}" alt="home icon" width="300" height= "300"/>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        
+		<!--Row 5-->
+		<div class="row">
+		<div class="row4">]
             <!--Colum1-->
             <div class="six left">
                 <div class="link-container">
@@ -266,20 +287,13 @@
                 </div>
 
             </div>
-            {% endif %}
-			
+            
             <!--Colum2-->
-            {% if admin %}
-            <div class="six right">
-                <div class= "link-container">
-                <a href="{% url 'adminhome' %}" class="button4">Back to home</a>
-            {% else %}
             <div class="six middle">
                 <div class= "link-container">
                 <a href="{% url 'userhome' %}" class="button4">Back to home</a>
-            {% endif %}
 					<div class="img1">
-						<img src = "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/home.jpg" alt="home icon" width="150" height= "150"/>
+						<img src = "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/home.png" alt="home icon" width="150" height= "150"/>
 					</div>
 				</div>
 			</div>
@@ -294,7 +308,7 @@
 		</div>
 		
 	
-		<!--Row 5-->
+		<!--Row 6-->
 		<div class="row">
 		<div class="last">
 		</div>

@@ -18,7 +18,9 @@ def detail(request, entity_id):
     
     comments = EntityComment.objects.filter(entity_id = entity_id)
     count = EntityComment.objects.filter(entity_id = entity_id).count()
-    context = {'entity': get_object_or_404(Entity, id = entity_id), 'comments': comments, 'count': count}
+    recommend_list = Entity.objects.all().order_by("-positive_review")[:5]
+    
+    context = {'entity': get_object_or_404(Entity, id = entity_id), 'comments': comments, 'count': count, 'recommend_list': recommend_list}
     return render(request, 'entity/detail.html', context)
 
 def search(request):
