@@ -73,6 +73,13 @@ nav ul li a{
 	margin: 0px;
 }
 
+.rowrec{
+    color: #fff;
+    padding-top: 30px;
+    opacity: 1;
+    filter: alpha(opacity=60);
+}
+
 .row3 .six, .row3 .three{
 	height: 333px;
 	
@@ -205,7 +212,10 @@ header{
 	font-size: 40px;
 
 }
-
+.img1{
+    padding-top: 50px;
+    width:300px;
+}
 
 
 </style>
@@ -311,7 +321,32 @@ header{
 		</div>
 		</div>
 		
-		<!--Row 4-->
+        
+        <div class="three middle">
+            <div class= "button3">
+                Recommended places:
+            </div>
+        </div>
+        <!--Row recommendation-->
+        <div class="row">
+            <div class="rowrec">
+                {% for each in recommend_list %}
+                {% if each.id != entity.id %}
+                <div class="three middle">
+                    <div class= "link-container1">
+                        <a href="{% url 'detail' each.id %}" class="button3">{{each.name}}
+                            <div class="img1">
+                                <img src = "{{each.photolink}}" alt="{{each.name}}" width="300" height= "300"/>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!--Row 4-->
 		<div class="row">
 		<div class="row4">
 			<!--Colum1-->

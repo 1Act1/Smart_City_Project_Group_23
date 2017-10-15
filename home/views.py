@@ -3,13 +3,14 @@ from django.http import HttpResponse, Http404
 from django.template import loader
 from account.models import Account
 from user_ver import user_ver
+from entity.models import Entity
 
 # Create your views here.       HOME VIEW
 
 
 def home(request):
     user_ver(request, False)
-    context = {'username': Account.objects.get(id=request.session['user_id']).username}
+    context = {'username': Account.objects.get(id=request.session['user_id']).username, 'recommend_list': Entity.objects.all().order_by("-positive_review")[:4]}
     return render(request, 'home/home.html', context)
 
 def support(request):

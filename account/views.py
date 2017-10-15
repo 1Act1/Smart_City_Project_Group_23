@@ -43,9 +43,9 @@ def loginver(request):
             if ac.password == request.POST['password']:
                 if ac.account_type == 'Admin':
                     request.session['user_id'] = ac.id
-                    return render(request, 'admin/admin_home.html', {'username': ac.username, 'ac': ac})
+                    return HttpResponseRedirect(reverse('adminhome'))
                 request.session['user_id'] = ac.id
-                return render(request, 'home/home.html', {'username': ac.username})
+                return HttpResponseRedirect(reverse('userhome'))
 
     return render(request, 'account/login.html', {'error_message': "Invalid information"})
 

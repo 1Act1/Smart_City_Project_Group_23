@@ -69,7 +69,7 @@ nav ul li a{
         </table>
 <center>
 <h3 style="font-size:160%;">Recover your account</h3>
-<section>
+<section style="font-size:120%;">
     <form action= '{% url 'recoverpassword' %}' method="POST">
         {% csrf_token %}
         <label>Your username: {{ username }}</label><br><br>
