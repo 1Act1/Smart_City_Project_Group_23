@@ -162,7 +162,7 @@
         display: inline-block;
         padding: 0 25px;
         height: 50px;
-        font-size: 16px;
+        font-size: 30px;
         line-height: 50px;
          border-radius: 25px;
             background-color: #f1f1f1;
@@ -217,7 +217,9 @@
                             <img src="https://image.flaticon.com/icons/png/512/36/36601.png" alt="Person" width="96" height="96">
 
                             <a href='{% url 'createconversation' each.id %}'>{{each.username}}</a>
-                        </div><br><br><br>{% endif %}
+                            
+                        </div>
+                        {% endif %}
                         {% endfor %}
 
                         <br>
