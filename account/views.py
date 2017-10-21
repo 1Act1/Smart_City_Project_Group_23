@@ -143,7 +143,7 @@ def editacsave(request):
     new_pw = request.POST['new_password']
     confirm_pw = request.POST['confirm_password']
 
-    if (old_pw):
+    if (new_pw or old_pw or confirm_pw):
         if (user_ac.password == old_pw and new_pw == confirm_pw):
             user_ac.password = new_pw
         else:

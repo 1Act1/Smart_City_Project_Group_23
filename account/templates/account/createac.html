@@ -1,8 +1,11 @@
 <html>
 <head>
 <meta name="viewport" content="width = device-width, initial-scale = 1">
-<title>Header</title>
-<link rel="stylesheet" type="text/css" href="css/style.css">
+{% if admin %}
+<title>Create another admin account</title>
+{% else %}
+<title>Create account for Smart City</title>
+{% endif %}
 <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
 <style>
 section {

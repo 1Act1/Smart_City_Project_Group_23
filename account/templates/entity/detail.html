@@ -2,8 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width = device-width, initial-scale = 1">
-<title>Detail</title>
-<link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>{{entity.name}}</title>
 <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
 <style>
     <!-- -->
@@ -229,6 +228,11 @@
                         <b>How do you feel about {{ entity.name }} ?</b><br>
                         <input type="radio" name="review" value="Good"> Good<br>
                         <input type="radio" name="review" value="Bad"> Bad <br>
+                        <input type='submit' name='Submit' value='Vote'><br>
+                            <br>
+                            
+                        Number of vote said Good: {{entity.positive_review}}<br>
+                        Number of vote said Bad: {{entity.negative_review}}<br><br>
 
                         <br>Leave your thoughts:<br>
                         <textarea row='10' cols="100" name="commentbox" id="commentbox"></textarea>

@@ -2,8 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width = device-width, initial-scale = 1">
-<title>Edit Entity</title>
-<link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Edit {{entity.name}}</title>
 <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
 <style>
     <!-- -->
@@ -208,7 +207,7 @@
 
                     {% if message %}
                     <br><br>
-                    <font color='red'><strong>{{message}}</strong></font>
+                    <h1><font color='red'><strong>{{message}}</strong></font></h1>
                     <br><br>
                     {% endif %}
 
@@ -217,15 +216,15 @@
 
                         <h3> Details:</h3>
                         Name: <br>
-                        <input type="text" name="name" value="{{entity.name}}"><br><br>
+                        <input type="text" name="name" value="{{entity.name}}" required><br><br>
                         Description: <br>
-                        <input type="text" name="description" value="{{entity.description}}"><br><br>
+                        <input type="text" name="description" value="{{entity.description}}" required><br><br>
                         Address: <br>
-                        <input type="text" name="address" value="{{entity.address}}"><br><br>
+                        <input type="text" name="address" value="{{entity.address}}" required><br><br>
                         Photo Link: <br>
                         <input type="text" name="photolink" value="{{entity.photolink}}"><br><br>
                         Offical Link: <br>
-                        <input type="text" name="officallink" value="{{entity.officallink}}"><br><br>
+                        <input type="text" name="officallink" value="{{entity.officallink}}" required><br><br>
 
                         {% if entityid == 0 %}
                         <input type="submit" value="Create">

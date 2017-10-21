@@ -67,13 +67,21 @@ def edit_entity(request, entity_id):
 
 def edit_entity_save(request, entity_id):
     user_ver(request, True)
+    all_en = Entity.objects.all();
     
     if int(entity_id) == 0:
         a = Entity()
     else:
         a = Entity.objects.get(id = entity_id)
     
-    a.name = request.POST['name']
+    requestname = request.POST['name']
+
+    for en in all_en:
+        if (requestname == en.name) and int(entity_id) == 0:
+            return render(request, 'entity/edit_create_entity.html', {'message': "An entity with this name existed.", 'entityid': 0})
+
+
+    a.name = requestname
     a.description = request.POST['description']
     a.address = request.POST['address']
     a.photolink = request.POST['photolink']
@@ -81,7 +89,7 @@ def edit_entity_save(request, entity_id):
 
     a.save()
 
-    if entity_id == 0:
+    if int(entity_id) == 0:
         return HttpResponseRedirect(reverse('adminentitylist', args=()))
     else:
         return HttpResponseRedirect(reverse('editentity', args=(entity_id,)))
@@ -108,6 +116,7 @@ def review(request, entity_id):
             entity.negative_review += 1
         entity.save()
 
+    comment = comment.strip()
     if comment:
         new_comment = EntityComment()
         new_comment.entity_id = entity_id
