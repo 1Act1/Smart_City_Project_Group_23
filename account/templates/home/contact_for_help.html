@@ -181,13 +181,20 @@ ul li:hover{
 			</header>
 		</div>
 		
-		<!--Row 2-->
+        {% if message %}
+        <br><br>
+        <h1><font color='red'><strong>{{message}}</strong></font></h1>
+        <br><br>
+        {% endif %}
+        
+        <!--Row 2-->
 		<div class="row">
 			<div class="bigImg">
 				<div class="support">
 					<h1>How can we help you? </h1>
 				</div>
 				<div class="support1">
+                    
 					<h2>Resources that will teach you everthing about SmartCity. </h2>
 				</div>
                 

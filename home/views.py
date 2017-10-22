@@ -10,7 +10,14 @@ from entity.models import Entity
 
 def home(request):
     user_ver(request, False)
-    context = {'username': Account.objects.get(id=request.session['user_id']).username, 'recommend_list': Entity.objects.all().order_by("-positive_review")[:4]}
+    ac = Account.objects.get(id=request.session['user_id'])
+    if ac.account_type == 'Student' :
+        recommend_list = Entity.objects.all().order_by("-positive_review").exclude(type='Hotel').exclude(type='Industry')[:4]
+    if ac.account_type == 'Tourist' :
+        recommend_list = Entity.objects.all().order_by("-positive_review").exclude(type='College').exclude(type='Industry').exclude(type='Library')[:4]
+    if ac.account_type == 'Businessman' :
+        recommend_list = Entity.objects.all().order_by("-positive_review").exclude(type='College').exclude(type='Library')[:4]
+    context = {'username': ac.username, 'recommend_list': recommend_list}
     return render(request, 'home/home.html', context)
 
 def support(request):

@@ -226,12 +226,40 @@
                         Offical Link: <br>
                         <input type="text" name="officallink" value="{{entity.officallink}}" required><br><br>
 
+                        <label>Entity Type (Choose one):</label><br>
+                        <input type='radio' id='1' name='entype' value=1 {% if typeno == 1 %} checked='checked'{% endif %}>
+                        <label> College </label><br>
+                        <input type='radio' id='2' name='entype' value=2 {% if typeno == 2 %} checked='checked'{% endif %}>
+                        <label> Library </label><br>
+                        <input type='radio' id='3' name='entype' value=3 {% if typeno == 3 %} checked='checked'{% endif %}>
+                        <label> Industry </label><br>
+                        <input type='radio' id='4' name='entype' value=4 {% if typeno == 4 %} checked='checked'{% endif %}>
+                        <label> Hotel </label><br>
+                        <input type='radio' id='5' name='entype' value=5 {% if typeno == 5 %} checked='checked'{% endif %}>
+                        <label> Park </label><br>
+                        <input type='radio' id='6' name='entype' value=6 {% if typeno == 6 %} checked='checked'{% endif %}>
+                        <label> Zoo </label><br>
+                        <input type='radio' id='7' name='entype' value=7{% if typeno == 7 %} checked='checked'{% endif %}>
+                        <label> Museum </label><br>
+                        <input type='radio' id='8' name='entype' value=8 {% if typeno == 8 %} checked='checked'{% endif %}>
+                        <label> Restaurant </label><br>
+                        <input type='radio' id='9' name='entype' value=9 {% if typeno == 9 %} checked='checked'{% endif %}>
+                        <label> Mall </label><br>
+            
+            
                         {% if entityid == 0 %}
-                        <input type="submit" value="Create">
+                        <input type="submit" onclick="clicked(event)" value="Create">
                         {% else %}
-                        <input type="submit" value="Save Changes">
+                        <input type="submit" onclick="clicked(event)" value="Save Changes">
                         {% endif %}
                         <input type="reset"><br>
+                            
+                        <script>
+                        function clicked(e)
+                        {
+                            if(!confirm('Are you sure?'))e.preventDefault();
+                        }
+                        </script>
                     </form>
                 </divstyle="height:100%;>
 			</div>

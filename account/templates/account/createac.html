@@ -102,9 +102,12 @@ nav ul li a{
     {% endif %}
     
         {% csrf_token %}
-        
+        <label>Your name:</label><br>
+        <input id="yourname" type="text" name="yourname" maxlength="100" required />
+        <br>
+    
         <label>Username:</label><br>
-        <input id="your_name" type="text" name="name" maxlength="100" required />
+        <input id="username" type="text" name="username" maxlength="100" required />
         <br>
         <label>Password:</label><br>
         <input id="password" type="password" name="password" maxlength="100" required />

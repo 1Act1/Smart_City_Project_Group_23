@@ -74,9 +74,6 @@ def conversation(request, receiver_id):
             x.append(each)
             count += 1
 
-    if not x:
-        raise Http404("Invalid request");
-
     if Account.objects.get(id = request.session['user_id']).account_type == "Admin":
         admin = True
     else:
@@ -117,9 +114,13 @@ def help_message(request):
     
     receiving_admin = Account.objects.get(username = 'susan')
     help_message = request.POST['help box']
+    help_message = help_message.strip()
+    
+    if not help_message:
+        return HttpResponseRedirect(reverse('support'))
     
     a = Message(senderid = request.session['user_id'], receiverid = receiving_admin.id, message = help_message)
     a.save()
     
-    context = {'message': "Message sent"}
-    return render(request, 'home/contact_for_help.html', context)
+    context = {}
+    return HttpResponseRedirect(reverse('userconversation', args=(receiving_admin.id,)))

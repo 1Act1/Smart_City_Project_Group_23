@@ -59,15 +59,29 @@ def admin_entity_list(request):
 
 def edit_entity(request, entity_id):
     user_ver(request, True)
+    typeno = 0
+    
+    types = ['College', 'Library', 'Industry', 'Hotel', 'Park', 'Zoo', 'Museum', 'Restaurant', 'Mall']
+    
+    
     if int(entity_id) != 0:
-        context = {'entity': get_object_or_404(Entity, id = entity_id), 'entityid': int(entity_id)}
+        en = get_object_or_404(Entity, id = entity_id)
+        count = 0
+        for i in types:
+            count += 1
+            if en.type == i:
+                typeno = count
+    
+    if int(entity_id) != 0:
+        context = {'entity': en, 'entityid': int(entity_id), 'typeno': typeno}
     else:
         context = {'entityid': 0}
     return render(request, 'entity/edit_create_entity.html', context)
 
 def edit_entity_save(request, entity_id):
+    types = ['College', 'Library', 'Industry', 'Hotel', 'Park', 'Zoo', 'Museum', 'Restaurant', 'Mall']
     user_ver(request, True)
-    all_en = Entity.objects.all();
+    all_en = Entity.objects.all()
     
     if int(entity_id) == 0:
         a = Entity()
@@ -75,17 +89,23 @@ def edit_entity_save(request, entity_id):
         a = Entity.objects.get(id = entity_id)
     
     requestname = request.POST['name']
-
     for en in all_en:
         if (requestname == en.name) and int(entity_id) == 0:
             return render(request, 'entity/edit_create_entity.html', {'message': "An entity with this name existed.", 'entityid': 0})
 
+    try:
+        typeno = request.POST['entype']
+    except MultiValueDictKeyError:
+        return render(request, 'entity/edit_create_entity.html', {'error_message': "Please choose an entity type."})
+    else:
+        entype = types[int(typeno) - 1]
 
     a.name = requestname
     a.description = request.POST['description']
     a.address = request.POST['address']
     a.photolink = request.POST['photolink']
     a.officallink = request.POST['officallink']
+    a.type = entype
 
     a.save()
 
@@ -93,6 +113,10 @@ def edit_entity_save(request, entity_id):
         return HttpResponseRedirect(reverse('adminentitylist', args=()))
     else:
         return HttpResponseRedirect(reverse('editentity', args=(entity_id,)))
+
+def draft(request):
+    context = {'entity': get_object_or_404(Entity, id = entity_id), 'comments': comments, 'count': count, 'recommend_list': recommend_list}
+    return render(request, 'entity/detail.html', context)
 
 def adminsearch(request):
     user_ver(request, True)

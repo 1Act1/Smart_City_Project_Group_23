@@ -62,7 +62,8 @@ def createadmin(request):
 def createprocess(request):
     types = ['Student', 'Tourist', 'Businessman']
     
-    name = request.POST['name']
+    yourname = request.POST['yourname']
+    user_name = request.POST['username']
     password = request.POST['password']
     confirmpw = request.POST['confirm_password']
     phoneno = request.POST['phone_number']
@@ -76,7 +77,7 @@ def createprocess(request):
         type = types[int(typeno) - 1]
     
     for ac in Account.objects.all():
-        if ac.username == name:
+        if ac.username == user_name:
             return render(request, 'account/createac.html', {'error_message': "This username have been chosen."})
         if ac.email_address == email:
             return render(request, 'account/createac.html', {'error_message': "This email have been registered."})
@@ -85,17 +86,26 @@ def createprocess(request):
     if password != confirmpw:
         return render(request, 'account/createac.html', {'error_message': "Your password does not match."})
     
-    newac = Account(account_type = type, username = name, password = password, phone_number = phoneno, email_address = email, residential_address = address)
+    newac = Account(name = yourname, account_type = type, username = user_name, password = password, phone_number = phoneno, email_address = email, residential_address = address)
     
     newac.save()
-    
-    return redirect('../')
+
+    subject = 'Welcome to Smart City!'
+    from_email = settings.DEFAULT_FROM_EMAIL
+    message = ''
+    recipient_list = [newac.email_address]
+    html_message = '<h3>' + 'Hello, ' + newac.username + '<br><br>Here is a warm welcome from SmartCity, feel free to browse the website and enjoy your time! ' + '<br><br>Smart City</h3>'
+
+    send_mail(subject, message, from_email, recipient_list, fail_silently=False, html_message=html_message)
+
+    return HttpResponseRedirect(reverse('login'))
 
 
 def createadminprocess(request):
     user_ver(request, True)
     
-    name = request.POST['name']
+    yourname = request.POST['yourname']
+    username = request.POST['username']
     password = request.POST['password']
     confirmpw = request.POST['confirm_password']
     phoneno = request.POST['phone_number']
@@ -103,7 +113,7 @@ def createadminprocess(request):
     address = request.POST['address']
     
     for ac in Account.objects.all():
-        if ac.username == name:
+        if ac.username == username:
             return render(request, 'account/createac.html', {'error_message': "This username have been chosen.", 'admin': True})
         if ac.email_address == email:
             return render(request, 'account/createac.html', {'error_message': "This email have been registered."})
@@ -111,11 +121,11 @@ def createadminprocess(request):
     if password != confirmpw:
         return render(request, 'account/createac.html', {'error_message': "Your password does not match.", 'admin': True})
 
-    newac = Account(account_type = 'Admin', username = name, password = password, phone_number = phoneno, email_address = email, residential_address = address)
+    newac = Account(name = yourname, account_type = 'Admin', username = username, password = password, phone_number = phoneno, email_address = email, residential_address = address)
     
     newac.save()
-    
-    return redirect('../adminhome/')
+
+    return HttpResponseRedirect(reverse('adminhome'))
 
 
 
@@ -129,12 +139,13 @@ def editacsave(request):
     all_ac = Account.objects.all()
     user_ac = Account.objects.get(id=request.session['user_id'])
     
-    acname = request.POST['Username']
+    acname = request.POST['yourname']
+    acusername = request.POST['Username']
     acemail = request.POST['emailaddress']
     error = "Edit successful"
     
     for ac in all_ac:
-        if acname != user_ac.username and ac.username == acname:
+        if acusername != user_ac.username and ac.username == acusername:
             error = "This username have been chosen."
         if acemail != user_ac.email_address and ac.email_address == acemail:
             error = "This email have been registered."
@@ -150,7 +161,8 @@ def editacsave(request):
             error = "Invalid password"
 
     if error == "Edit successful":
-        user_ac.username = acname
+        user_ac.name = acname
+        user_ac.username = acusername
         user_ac.email_address = acemail
         user_ac.residential_address = request.POST['address']
         user_ac.phone_number = request.POST['contactnumber']
@@ -236,7 +248,7 @@ def logout(request):
         del request.session['user_id']
     except KeyError:
         pass
-    return redirect('../')
+    return HttpResponseRedirect(reverse('login'))
 
 
 
