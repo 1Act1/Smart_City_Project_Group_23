@@ -54,7 +54,6 @@ urlpatterns = [
     url(r'^home/entitylist/search/$', enviews.search, name = 'search'),
     url(r'^adminhome/entitylist/$', enviews.admin_entity_list, name = 'adminentitylist'),
     url(r'^adminhome/entitylist/(?P<entity_id>[0-9]+)/$', enviews.edit_entity, name = 'editentity'),
-    url(r'^adminhome/entitylist/(?P<entity_id>[0-9]+)/draft/$', enviews.draft, name = 'editentitydraft'),
     url(r'^adminhome/entitylist/(?P<entity_id>[0-9]+)/save/$', enviews.edit_entity_save, name = 'editentitysave'),
     url(r'^adminhome/entitylist/search/$', enviews.adminsearch, name = 'adminsearch'),
             

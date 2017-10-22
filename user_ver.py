@@ -34,3 +34,11 @@ def recover_ver(request, admin, both = False):
             if Account.objects.get(id=b).account_type == "Admin":
                 raise Http404("Unauthorized access")
 
+def process_access(request, testpost):
+    try:
+        request.POST[testpost]
+    except:
+        raise Http404("Unknown information")
+
+
+

@@ -4,7 +4,7 @@ from .models import Account
 from django.template import loader
 from django.utils.datastructures import MultiValueDictKeyError
 from django.conf.urls import url
-from user_ver import user_ver, recover_ver
+from user_ver import user_ver, recover_ver, process_access
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.conf import settings
@@ -32,10 +32,7 @@ def login(request):
     return render(request, 'account/login.html', context)
 
 def loginver(request):
-    try :
-        request.POST['name']
-    except:
-        user_ver(request, False);
+    process_access(request, 'name')
     
     for ac in Account.objects.all():
         if ac.username == request.POST['name']:
@@ -60,6 +57,8 @@ def createadmin(request):
     return render(request, 'account/createac.html', context)
 
 def createprocess(request):
+    process_access(request, 'yourname')
+    
     types = ['Student', 'Tourist', 'Businessman']
     
     yourname = request.POST['yourname']
@@ -103,6 +102,7 @@ def createprocess(request):
 
 def createadminprocess(request):
     user_ver(request, True)
+    process_access(request, 'yourname')
     
     yourname = request.POST['yourname']
     username = request.POST['username']
@@ -136,6 +136,8 @@ def editac(request):
 
 def editacsave(request):
     user_ver(request, False)
+    process_access(request, 'yourname')
+    
     all_ac = Account.objects.all()
     user_ac = Account.objects.get(id=request.session['user_id'])
     
@@ -175,10 +177,10 @@ def recoverac(request):
     return render(request, 'account/recover_account.html')
 
 def recoverusername(request):
-    try:
-        ac = Account.objects.filter(email_address = request.POST['email'])
-    except MultiValueDictKeyError:
-        raise Http404("Unknown ID")
+    
+    process_access(request, 'email')
+
+    ac = Account.objects.filter(email_address = request.POST['email'])
 
     if (not ac):
         return render(request, 'account/recover_account.html', {'warning': "This email does not exist"})
@@ -188,6 +190,8 @@ def recoverusername(request):
 
 def recoverpassword(request):
     recover_ver(request, False, True)
+    process_access(request, 'recover_id')
+    
     ac = Account.objects.get(id = request.session['recover_id'])
     
     rand = randint(0, 999999)
@@ -212,6 +216,7 @@ def recoverpassword(request):
 
 def recoverpasswordconfirm(request):
     recover_ver(request, False, True)
+    process_access(request, 'secretcode')
     
     actualcode = request.session['secretcode']
     secretcode = request.POST['secretcode']

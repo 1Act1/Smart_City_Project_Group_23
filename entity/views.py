@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 from .models import Entity, EntityComment
+from account.models import Account
 from django.template import loader
-from user_ver import user_ver
+from user_ver import user_ver, process_access
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 
@@ -15,11 +16,15 @@ def list(request):
 
 def detail(request, entity_id):
     user_ver(request, False)
-    
+    ac = Account.objects.get(id = request.session['user_id'])
     comments = EntityComment.objects.filter(entity_id = entity_id)
     count = EntityComment.objects.filter(entity_id = entity_id).count()
-    recommend_list = Entity.objects.all().order_by("-positive_review")[:4]
-    
+    if ac.account_type == 'Student' :
+        recommend_list = Entity.objects.all().order_by("-positive_review").exclude(type='Hotel').exclude(type='Industry')[:4]
+    if ac.account_type == 'Tourist' :
+        recommend_list = Entity.objects.all().order_by("-positive_review").exclude(type='College').exclude(type='Industry').exclude(type='Library')[:4]
+    if ac.account_type == 'Businessman' :
+        recommend_list = Entity.objects.all().order_by("-positive_review").exclude(type='College').exclude(type='Library')[:4]
     context = {'entity': get_object_or_404(Entity, id = entity_id), 'comments': comments, 'count': count, 'recommend_list': recommend_list}
     return render(request, 'entity/detail.html', context)
 
@@ -79,6 +84,9 @@ def edit_entity(request, entity_id):
     return render(request, 'entity/edit_create_entity.html', context)
 
 def edit_entity_save(request, entity_id):
+    user_ver(request, True)
+    process_access(request, 'name')
+    
     types = ['College', 'Library', 'Industry', 'Hotel', 'Park', 'Zoo', 'Museum', 'Restaurant', 'Mall']
     user_ver(request, True)
     all_en = Entity.objects.all()
@@ -114,10 +122,6 @@ def edit_entity_save(request, entity_id):
     else:
         return HttpResponseRedirect(reverse('editentity', args=(entity_id,)))
 
-def draft(request):
-    context = {'entity': get_object_or_404(Entity, id = entity_id), 'comments': comments, 'count': count, 'recommend_list': recommend_list}
-    return render(request, 'entity/detail.html', context)
-
 def adminsearch(request):
     user_ver(request, True)
     input = request.POST['search_input']
@@ -126,6 +130,8 @@ def adminsearch(request):
 
 def review(request, entity_id):
     user_ver(request, False)
+    process_access(request, 'commentbox')
+    
     entity = Entity.objects.get(id = entity_id)
     comment = request.POST['commentbox']
     try:

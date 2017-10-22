@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404
 from django.template import loader
 from .models import Message
 from account.models import Account
-from user_ver import user_ver
+from user_ver import user_ver, process_access
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 
@@ -11,6 +11,7 @@ from django.http import HttpResponseRedirect
 
 def user_messenger(request):
     user_ver(request, False)
+    
     admin_id = request.session['user_id']
     
     x = []
@@ -83,12 +84,10 @@ def conversation(request, receiver_id):
 
 def add_message(request, receiver_id):
     user_ver(request, False, True)
+    process_access(request, 'conversationbox')
     
-    try:
-        my_message = request.POST['conversationbox']
-    except:
-        raise Http404("Invalid request")
-    
+    my_message = request.POST['conversationbox']
+    my_message = my_message.strip()
     
     if my_message != "":
         a = Message(senderid = request.session['user_id'], receiverid = receiver_id, message = my_message)
@@ -111,6 +110,7 @@ def create_conversation(request, receiver_id):
 
 def help_message(request):
     user_ver(request, False)
+    process_access(request, 'help box')
     
     receiving_admin = Account.objects.get(username = 'susan')
     help_message = request.POST['help box']
