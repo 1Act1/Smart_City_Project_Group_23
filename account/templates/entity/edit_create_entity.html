@@ -252,7 +252,8 @@
                         {% else %}
                         <input type="submit" onclick="clicked(event)" value="Save Changes">
                         {% endif %}
-                        <input type="reset"><br>
+                        <input type="reset">
+                        
                             
                         <script>
                         function clicked(e)
@@ -260,6 +261,9 @@
                             if(!confirm('Are you sure?'))e.preventDefault();
                         }
                         </script>
+                    </form>
+                    <form action='{% url 'editentitydraft' entityid %}' method="POST">
+                        <input type="submit"><br>
                     </form>
                 </divstyle="height:100%;>
 			</div>
