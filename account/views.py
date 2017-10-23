@@ -190,7 +190,6 @@ def recoverusername(request):
 
 def recoverpassword(request):
     recover_ver(request, False, True)
-    process_access(request, 'recover_id')
     
     ac = Account.objects.get(id = request.session['recover_id'])
     
