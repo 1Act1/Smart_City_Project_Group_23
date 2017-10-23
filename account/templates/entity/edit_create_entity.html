@@ -190,7 +190,7 @@
                         <li><a href="{% url 'createadmin' %}">Create Admin</a></li>
                         <li><a href="{% url 'adminmessenger' %}">Messenger</a></li>
                         <li><a href="{% url 'logout' %}">Logout</a></li>
-				</ul>
+                    </ul>
 				</nav>
 			</header>
 		</div>
@@ -216,15 +216,15 @@
 
                         <h3> Details:</h3>
                         Name: <br>
-                        <input type="text" name="name" value="{{entity.name}}" required><br><br>
+                        <input type="text" name="name" value="{{entity.name}}" required/><br><br>
                         Description: <br>
-                        <input type="text" name="description" value="{{entity.description}}" required><br><br>
+                        <input type="text" name="description" value="{{entity.description}}" required/><br><br>
                         Address: <br>
-                        <input type="text" name="address" value="{{entity.address}}" required><br><br>
+                        <input type="text" name="address" value="{{entity.address}}" required/><br><br>
                         Photo Link: <br>
                         <input type="text" name="photolink" value="{{entity.photolink}}"><br><br>
                         Offical Link: <br>
-                        <input type="text" name="officallink" value="{{entity.officallink}}" required><br><br>
+                        <input type="text" name="officallink" value="{{entity.officallink}}" required/><br><br>
 
                         <label>Entity Type (Choose one):</label><br>
                         <input type='radio' id='1' name='entype' value=1 {% if typeno == 1 %} checked='checked'{% endif %}>
