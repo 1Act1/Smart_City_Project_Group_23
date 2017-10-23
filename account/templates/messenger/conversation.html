@@ -200,7 +200,11 @@
 		<div class="row">
 			<header>
 				<nav>
-				<img src= "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/logo.jpg" width="150" height= "80">
+                    {% if admin %}
+                    <a href = "{% url 'adminhome' %}"><img src= "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/logo.jpg" width="150" height= "80"></a>
+                    {% else %}
+                    <a href = "{% url 'login' %}"><img src= "https://raw.githubusercontent.com/wesleylam/Smart_City_Project_Group_23/master/static/logo.jpg" width="150" height= "80"></a>
+                    {% endif %}
                     <ul>
                     {% if admin %}
                     <li><a href="{% url 'adminentitylist' %}">List of Entity</a></li>
